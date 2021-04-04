@@ -1,6 +1,6 @@
-package codeit.gatcha.security;
+package codeit.gatcha.security.entity;
 
-import codeit.gatcha.user.User;
+import codeit.gatcha.user.entity.User;
 import lombok.Data;
 
 import javax.persistence.*;
