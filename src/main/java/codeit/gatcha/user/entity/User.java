@@ -2,10 +2,11 @@ package codeit.gatcha.user.entity;
 
 import codeit.gatcha.security.entity.Authority;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
+@Data @NoArgsConstructor
 @Entity
 public class User {
     @Id
@@ -21,4 +22,11 @@ public class User {
     private String password;
 
     private boolean enabled = true;
+
+    public User(String userName, String password, boolean enabled, Authority authority) {
+        this.authority = authority;
+        this.userName = userName;
+        this.password = password;
+        this.enabled = enabled;
+    }
 }

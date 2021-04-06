@@ -2,11 +2,12 @@ package codeit.gatcha.security.entity;
 
 import codeit.gatcha.user.entity.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Data @NoArgsConstructor
 @Entity
 public class Authority {
     @Id
@@ -18,4 +19,9 @@ public class Authority {
 
     @Column(unique = true)
     private String role;
+
+    public Authority(Set<User> users, String role) {
+        this.users = users;
+        this.role = role;
+    }
 }
