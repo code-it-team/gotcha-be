@@ -1,12 +1,14 @@
 package codeit.gatcha.user.entity;
 
 import codeit.gatcha.security.entity.Authority;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data @NoArgsConstructor
+@Data @NoArgsConstructor @Builder @AllArgsConstructor
 @Entity
 public class User {
     @Id

@@ -33,12 +33,12 @@ public class AuthenticationController {
         }catch (AuthenticationException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Username or Password");
         }catch (RuntimeException re){
-            return ResponseEntity.badRequest().body(String.format("The user %s isn't found", authenticationRequest.getUsername()));
+            return ResponseEntity.badRequest().body(String.format("The user %s isn't found", authenticationRequest.getUserName()));
         }
     }
 
     private ResponseEntity<AuthenticationResponse> createAuthToken(AuthenticationRequest authenticationRequest) {
-        UserDetails userDetails =  customUserDetailService.loadUserByUsername(authenticationRequest.getUsername());
+        UserDetails userDetails =  customUserDetailService.loadUserByUsername(authenticationRequest.getUserName());
 
         User user = userRepo.
                 findByUserName(userDetails.getUsername()).
@@ -50,7 +50,7 @@ public class AuthenticationController {
     }
     // if this method runs successfully it means that authentication done successfully
     private void verifyAuthenticationRequest(AuthenticationRequest ar) {
-        var authentication = new UsernamePasswordAuthenticationToken(ar.getUsername(), ar.getPassword());
+        var authentication = new UsernamePasswordAuthenticationToken(ar.getUserName(), ar.getPassword());
         authenticationManager.authenticate(authentication);
     }
 
