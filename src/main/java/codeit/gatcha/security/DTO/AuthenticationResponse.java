@@ -11,5 +11,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class AuthenticationResponse implements Serializable {
     private String jwt;
-    private String userName;
+    private String email;
 }

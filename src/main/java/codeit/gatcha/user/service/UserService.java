@@ -15,7 +15,7 @@ public class UserService {
     private final AuthorityRepo authorityRepo;
 
     public ResponseEntity<String> signUp(SignUpDTO signUpDTO) {
-        return userRepo.findByUserName(signUpDTO.getUserName()).
+        return userRepo.findByEmail(signUpDTO.getEmail()).
                 map(this::createUsernameAlreadyTakenMessage).
                 orElse(createNewUser(signUpDTO));
     }
@@ -23,7 +23,7 @@ public class UserService {
     private ResponseEntity<String> createUsernameAlreadyTakenMessage(User user) {
         return ResponseEntity.
                 status(HttpStatus.CONFLICT).
-                body(String.format("user name %s is already taken", user.getUserName()));
+                body(String.format("email %s is already taken", user.getEmail()));
     }
 
     private ResponseEntity<String> createNewUser(SignUpDTO signUpDTO) {
@@ -34,7 +34,7 @@ public class UserService {
     private User createUserFromSignUpDTO(SignUpDTO signUpDTO) {
         return User.
                 builder().
-                userName(signUpDTO.getUserName()).
+                email(signUpDTO.getEmail()).
                 password(signUpDTO.getPassword()).
                 authority(authorityRepo.findByRole("ROLE_USER")).
                 enabled(true).

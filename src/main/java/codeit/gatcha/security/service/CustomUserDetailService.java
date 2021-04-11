@@ -17,8 +17,8 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return userRepo.
-                findByUserName(userName).
+                findByEmail(userName).
                 map(CustomUserDetails::new).
-                orElseThrow(() -> new BadCredentialsException("Username or password are incorrect"));
+                orElseThrow(() -> new BadCredentialsException("Email or password are incorrect"));
     }
 }

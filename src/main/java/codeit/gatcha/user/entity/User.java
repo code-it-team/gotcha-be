@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Data @NoArgsConstructor @Builder @AllArgsConstructor
 @Entity
@@ -18,16 +19,17 @@ public class User {
     @ManyToOne
     private Authority authority;
 
+    @Email
     @Column(unique = true)
-    private String userName;
+    private String email;
 
     private String password;
 
     private boolean enabled = true;
 
-    public User(String userName, String password, boolean enabled, Authority authority) {
+    public User(String email, String password, boolean enabled, Authority authority) {
         this.authority = authority;
-        this.userName = userName;
+        this.email = email;
         this.password = password;
         this.enabled = enabled;
     }

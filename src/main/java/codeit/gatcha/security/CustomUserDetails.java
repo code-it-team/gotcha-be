@@ -9,14 +9,14 @@ import java.util.Collection;
 import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
-    private final String userName;
+    private final String email;
     private final String password;
     private final boolean enabled;
     private final List<GrantedAuthority> authorities;
 
 
     public CustomUserDetails(User user) {
-        this.userName = user.getUserName();
+        this.email = user.getEmail();
         this.password = user.getPassword();
         this.enabled = user.isEnabled();
 
@@ -36,7 +36,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.email;
     }
 
     @Override

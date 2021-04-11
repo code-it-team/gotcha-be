@@ -31,26 +31,26 @@ public class AuthenticationController {
             return createAuthToken(authenticationRequest);
 
         }catch (AuthenticationException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Username or Password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Email or Password");
         }catch (RuntimeException re){
-            return ResponseEntity.badRequest().body(String.format("The user %s isn't found", authenticationRequest.getUserName()));
+            return ResponseEntity.badRequest().body(String.format("The email %s isn't found", authenticationRequest.getEmail()));
         }
     }
 
     private ResponseEntity<AuthenticationResponse> createAuthToken(AuthenticationRequest authenticationRequest) {
-        UserDetails userDetails =  customUserDetailService.loadUserByUsername(authenticationRequest.getUserName());
+        UserDetails userDetails =  customUserDetailService.loadUserByUsername(authenticationRequest.getEmail());
 
         User user = userRepo.
-                findByUserName(userDetails.getUsername()).
+                findByEmail(userDetails.getUsername()).
                 orElseThrow(() -> new RuntimeException(""));
 
         String jwt = jwtService.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt, user.getUserName()));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, user.getEmail()));
     }
     // if this method runs successfully it means that authentication done successfully
     private void verifyAuthenticationRequest(AuthenticationRequest ar) {
-        var authentication = new UsernamePasswordAuthenticationToken(ar.getUserName(), ar.getPassword());
+        var authentication = new UsernamePasswordAuthenticationToken(ar.getEmail(), ar.getPassword());
         authenticationManager.authenticate(authentication);
     }
 

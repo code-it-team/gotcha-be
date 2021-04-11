@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data @RequiredArgsConstructor
 public class SignUpDTO {
-    private final String userName;
+    private final String email;
     private final String password;
 }
