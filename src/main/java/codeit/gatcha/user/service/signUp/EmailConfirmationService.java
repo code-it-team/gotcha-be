@@ -14,10 +14,10 @@ public class EmailConfirmationService {
     private final ConfirmationTokenRepo confirmationTokenRepo;
     private final EmailSendingService emailSendingService;
 
-    @Value("server.rootAddress")
+    @Value("${server.rootAddress}")
     private String rootAddress;
 
-    @Value("spring.mail.username")
+    @Value("${spring.mail.username}")
     private String email;
 
 
