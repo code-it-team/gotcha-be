@@ -52,7 +52,7 @@ public class SingUpService {
                 email(signUpDTO.getEmail()).
                 password(signUpDTO.getPassword()).
                 authority(authorityRepo.findByRole("ROLE_USER")).
-                enabled(true).
+                enabled(false).
                 build();
     }
 

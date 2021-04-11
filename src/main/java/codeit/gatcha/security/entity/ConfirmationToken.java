@@ -22,7 +22,7 @@ public class ConfirmationToken {
     private Date createdDate;
 
     @OneToOne
-    @JoinColumn(nullable = false, name = "id")
+    @JoinColumn(nullable = false)
     private User user;
 
     public ConfirmationToken(User user) {
