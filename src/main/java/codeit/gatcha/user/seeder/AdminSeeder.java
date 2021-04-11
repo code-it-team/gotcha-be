@@ -28,8 +28,8 @@ public class AdminSeeder implements CommandLineRunner {
     public void run(String... args){
         log.info("Adding new users.....");
 
-        Authority adminAuthority = new Authority(new HashSet<User>(), "ROLE_ADMIN");
-        Authority userAuthority = new Authority(new HashSet<User>(), "ROLE_USER");
+        Authority adminAuthority = new Authority(new HashSet<>(), "ROLE_ADMIN");
+        Authority userAuthority = new Authority(new HashSet<>(), "ROLE_USER");
 
         User jalil = new User("jalil.jarjanazy@gmail.com", "testPass", true, adminAuthority);
         User hazem = new User("hazem.alabiad@gmail.com", "testPass", true, adminAuthority);
