@@ -20,19 +20,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailService customUserDetailService;
     private final JwtRequestFilter jwtRequestFilter;
 
+    private final String[] ALLOWED_URLS = {
+                    "/v2/api-docs",
+                    "/configuration/ui",
+                    "/swagger-resources/**",
+                    "/configuration/**",
+                    "/swagger-ui.html",
+                    "/webjars/**",
+                    "/authenticate",
+                    "/h2-console/**",
+                    "/signup",
+                    "/confirm-account"};
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService);
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**");
     }
 
     @Override
@@ -40,11 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/h2-console/**",
-                        "/signup", "/confirm-account")
-                    .permitAll()
+                .antMatchers(ALLOWED_URLS).permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//this tells Spring to not run its default process creating sessions

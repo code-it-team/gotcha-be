@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service @RequiredArgsConstructor
-public class SingUpService {
+public class SignUpService {
     private final UserRepo userRepo;
     private final AuthorityRepo authorityRepo;
     private final EmailConfirmationService confirmationService;
