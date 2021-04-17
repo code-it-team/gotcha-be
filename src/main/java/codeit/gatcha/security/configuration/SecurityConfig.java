@@ -31,6 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/h2-console/**",
                     "/signup",
                     "/confirm-account"};
+
+    private final String[] ADMIN_ALLOWED_URLS = {
+            "/admin/**", "/actuator/health"
+    };
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService);
@@ -42,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(ALLOWED_URLS).permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers(ADMIN_ALLOWED_URLS).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
