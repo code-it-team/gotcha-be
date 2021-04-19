@@ -2,6 +2,8 @@ package codeit.gatcha.domain.answer.repo;
 
 import codeit.gatcha.domain.answer.entity.Answer;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AnswerRepo extends CrudRepository<Integer, Answer> {
+@Repository
+public interface AnswerRepo extends CrudRepository<Answer, Integer> {
 }

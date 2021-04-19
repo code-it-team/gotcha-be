@@ -1,12 +1,12 @@
 package codeit.gatcha.domain.answer.entity;
 
 import codeit.gatcha.domain.question.entity.Question;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Data @NoArgsConstructor
+@Entity @Data @NoArgsConstructor @Builder @AllArgsConstructor
+@EqualsAndHashCode(exclude="question")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
