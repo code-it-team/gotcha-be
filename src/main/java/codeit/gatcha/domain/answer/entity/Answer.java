@@ -1,4 +1,4 @@
-package codeit.gatcha.domain.answer;
+package codeit.gatcha.domain.answer.entity;
 
 import codeit.gatcha.domain.question.entity.Question;
 import lombok.Data;

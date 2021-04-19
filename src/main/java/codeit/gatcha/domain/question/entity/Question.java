@@ -1,6 +1,6 @@
 package codeit.gatcha.domain.question.entity;
 
-import codeit.gatcha.domain.answer.Answer;
+import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.user.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class Question {
     @Column(nullable = false)
     private String body;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Answer> answers = new HashSet<>();
 
     @ManyToMany
