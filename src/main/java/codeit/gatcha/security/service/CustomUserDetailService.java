@@ -1,7 +1,7 @@
 package codeit.gatcha.security.service;
 
 import codeit.gatcha.security.CustomUserDetails;
-import codeit.gatcha.user.repo.UserRepo;
+import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;

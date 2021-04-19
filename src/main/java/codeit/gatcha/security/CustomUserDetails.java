@@ -1,6 +1,6 @@
 package codeit.gatcha.security;
 
-import codeit.gatcha.user.entity.User;
+import codeit.gatcha.domain.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

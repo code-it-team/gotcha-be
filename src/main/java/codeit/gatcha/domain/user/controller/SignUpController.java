@@ -1,7 +1,7 @@
-package codeit.gatcha.user.controller;
+package codeit.gatcha.domain.user.controller;
 
-import codeit.gatcha.user.DTO.SignUpDTO;
-import codeit.gatcha.user.service.signUp.SignUpService;
+import codeit.gatcha.domain.user.DTO.SignUpDTO;
+import codeit.gatcha.domain.user.service.signUp.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

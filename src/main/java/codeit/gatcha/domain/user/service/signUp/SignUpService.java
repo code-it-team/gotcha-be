@@ -1,11 +1,11 @@
-package codeit.gatcha.user.service.signUp;
+package codeit.gatcha.domain.user.service.signUp;
 
 import codeit.gatcha.security.entity.ConfirmationToken;
 import codeit.gatcha.security.repo.AuthorityRepo;
 import codeit.gatcha.security.repo.ConfirmationTokenRepo;
-import codeit.gatcha.user.DTO.SignUpDTO;
-import codeit.gatcha.user.entity.User;
-import codeit.gatcha.user.repo.UserRepo;
+import codeit.gatcha.domain.user.DTO.SignUpDTO;
+import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

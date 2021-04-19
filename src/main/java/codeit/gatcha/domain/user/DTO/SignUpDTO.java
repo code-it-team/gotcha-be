@@ -1,4 +1,4 @@
-package codeit.gatcha.user.DTO;
+package codeit.gatcha.domain.user.DTO;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -1,12 +1,10 @@
-package codeit.gatcha.user.seeder;
+package codeit.gatcha.domain.user.seeder;
 
 import codeit.gatcha.security.entity.Authority;
 import codeit.gatcha.security.repo.AuthorityRepo;
-import codeit.gatcha.user.entity.User;
-import codeit.gatcha.user.repo.UserRepo;
+import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
