@@ -24,16 +24,13 @@ public class AuthenticationController {
     private final UserRepo userRepo;
     private final JwtService jwtService;
 
-    @PostMapping("/authenticate")
+    @PostMapping("/signin")
     public ResponseEntity<?> verifyAndCreateAuthToken(@RequestBody AuthenticationRequest authenticationRequest){
         try{
             verifyAuthenticationRequest(authenticationRequest);
             return createAuthToken(authenticationRequest);
-
         }catch (AuthenticationException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Email or Password");
-        }catch (RuntimeException re){
-            return ResponseEntity.badRequest().body(String.format("The email %s isn't found", authenticationRequest.getEmail()));
         }
     }
 

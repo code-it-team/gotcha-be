@@ -18,29 +18,30 @@ public class SignUpService {
     private final EmailConfirmationService confirmationService;
     private final ConfirmationTokenRepo confirmationTokenRepo;
 
-    public ResponseEntity<User> signUpAndSendConfirmationEmail(SignUpDTO signUpDTO){
-        ResponseEntity<User> userResponseEntity = signUp(signUpDTO);
+    public ResponseEntity<Object> signUpAndSendConfirmationEmail(SignUpDTO signUpDTO){
+        ResponseEntity<Object> userResponseEntity = signUp(signUpDTO);
         boolean newUserIsAdded = userResponseEntity.getStatusCode().is2xxSuccessful();
 
         if(newUserIsAdded)
-            confirmationService.createAndSendConfirmationTokenToUser(userResponseEntity.getBody());
+            confirmationService.createAndSendConfirmationTokenToUser((User) userResponseEntity.getBody());
 
         return userResponseEntity;
     }
 
-    public ResponseEntity<User> signUp(SignUpDTO signUpDTO) {
-        return userRepo.findByEmail(signUpDTO.getEmail()).
-                map(this::createUsernameAlreadyTakenMessage).
+    public ResponseEntity<Object> signUp(SignUpDTO signUpDTO) {
+        return userRepo.
+                findByEmail(signUpDTO.getEmail()).
+                map(this::createEmailAlreadyInUseMessage).
                 orElse(createNewUser(signUpDTO));
     }
 
-    private ResponseEntity<User> createUsernameAlreadyTakenMessage(User user) {
+    private ResponseEntity<Object> createEmailAlreadyInUseMessage(User user) {
         return ResponseEntity.
                 status(HttpStatus.CONFLICT).
-                body(user);
+                body(String.format("The email %s is already in use", user.getEmail()));
     }
 
-    private ResponseEntity<User> createNewUser(SignUpDTO signUpDTO) {
+    private ResponseEntity<Object> createNewUser(SignUpDTO signUpDTO) {
         User newUser = createUserFromSignUpDTO(signUpDTO);
         userRepo.save(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
@@ -56,20 +57,20 @@ public class SignUpService {
                 build();
     }
 
-    public ResponseEntity<?> confirmUserAccount(String confirmationToken) {
+    public ResponseEntity<String> confirmUserAccount(String confirmationToken) {
         return confirmationTokenRepo.
                 findByConfirmationToken(confirmationToken).
                 map(this::activateUserAccount).
-                orElseGet(() -> ResponseEntity.notFound().build());
+                orElseGet(() -> new ResponseEntity<>(String.format("The token %s isn't found", confirmationToken), HttpStatus.NOT_FOUND));
     }
 
-    private ResponseEntity<?> activateUserAccount(ConfirmationToken confirmationToken) {
+    private ResponseEntity<String> activateUserAccount(ConfirmationToken confirmationToken) {
         User user = confirmationToken.getUser();
         userRepo.
                 findByEmail(user.getEmail()).
                 ifPresent(this::enableUserAccount);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(String.format("%s account has been activated", user.getEmail()));
     }
 
     private void enableUserAccount(User user) {
