@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service @RequiredArgsConstructor
 public class SignUpService {
     private final UserRepo userRepo;
@@ -32,7 +34,14 @@ public class SignUpService {
         return userRepo.
                 findByEmail(signUpDTO.getEmail()).
                 map(this::createEmailAlreadyInUseMessage).
-                orElse(createNewUser(signUpDTO));
+                orElseGet(() -> createNewUser(signUpDTO));
+    }
+
+    public ResponseEntity<String> confirmUserAccount(String confirmationToken) {
+        return confirmationTokenRepo.
+                findByConfirmationToken(confirmationToken).
+                map(this::activateUserAccount).
+                orElseGet(() -> new ResponseEntity<>(String.format("The token %s isn't found", confirmationToken), HttpStatus.NOT_FOUND));
     }
 
     private ResponseEntity<Object> createEmailAlreadyInUseMessage(User user) {
@@ -55,13 +64,6 @@ public class SignUpService {
                 authority(authorityRepo.findByRole("ROLE_USER")).
                 enabled(false).
                 build();
-    }
-
-    public ResponseEntity<String> confirmUserAccount(String confirmationToken) {
-        return confirmationTokenRepo.
-                findByConfirmationToken(confirmationToken).
-                map(this::activateUserAccount).
-                orElseGet(() -> new ResponseEntity<>(String.format("The token %s isn't found", confirmationToken), HttpStatus.NOT_FOUND));
     }
 
     private ResponseEntity<String> activateUserAccount(ConfirmationToken confirmationToken) {
