@@ -1,7 +1,7 @@
-package codeit.gatcha.security.filter;
+package codeit.gatcha.application.security.filter;
 
-import codeit.gatcha.security.service.CustomUserDetailService;
-import codeit.gatcha.security.service.JwtService;
+import codeit.gatcha.application.security.service.CustomUserDetailService;
+import codeit.gatcha.application.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

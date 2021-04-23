@@ -1,8 +1,8 @@
 package codeit.gatcha.domain.user.service.signUp;
 
-import codeit.gatcha.email.service.EmailSendingService;
-import codeit.gatcha.security.entity.ConfirmationToken;
-import codeit.gatcha.security.repo.ConfirmationTokenRepo;
+import codeit.gatcha.application.email.service.EmailSendingService;
+import codeit.gatcha.application.security.entity.ConfirmationToken;
+import codeit.gatcha.application.security.repo.ConfirmationTokenRepo;
 import codeit.gatcha.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

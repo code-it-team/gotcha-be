@@ -1,4 +1,4 @@
-package codeit.gatcha.security.DTO;
+package codeit.gatcha.application.security.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

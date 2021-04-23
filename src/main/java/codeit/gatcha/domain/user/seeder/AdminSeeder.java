@@ -1,7 +1,7 @@
 package codeit.gatcha.domain.user.seeder;
 
-import codeit.gatcha.security.entity.Authority;
-import codeit.gatcha.security.repo.AuthorityRepo;
+import codeit.gatcha.application.security.entity.Authority;
+import codeit.gatcha.application.security.repo.AuthorityRepo;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.extern.log4j.Log4j2;

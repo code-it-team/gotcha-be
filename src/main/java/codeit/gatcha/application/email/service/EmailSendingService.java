@@ -1,4 +1,4 @@
-package codeit.gatcha.email.service;
+package codeit.gatcha.application.email.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;

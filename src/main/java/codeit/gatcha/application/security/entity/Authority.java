@@ -1,4 +1,4 @@
-package codeit.gatcha.security.entity;
+package codeit.gatcha.application.security.entity;
 
 import codeit.gatcha.domain.user.entity.User;
 import lombok.Data;

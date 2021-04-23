@@ -1,4 +1,4 @@
-package codeit.gatcha.tool.swagger;
+package codeit.gatcha.application.tool.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

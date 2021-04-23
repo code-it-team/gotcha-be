@@ -1,9 +1,9 @@
-package codeit.gatcha.security.controller;
+package codeit.gatcha.application.security.controller;
 
-import codeit.gatcha.security.DTO.AuthenticationRequest;
-import codeit.gatcha.security.DTO.AuthenticationResponse;
-import codeit.gatcha.security.service.CustomUserDetailService;
-import codeit.gatcha.security.service.JwtService;
+import codeit.gatcha.application.security.DTO.AuthenticationRequest;
+import codeit.gatcha.application.security.DTO.AuthenticationResponse;
+import codeit.gatcha.application.security.service.CustomUserDetailService;
+import codeit.gatcha.application.security.service.JwtService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;

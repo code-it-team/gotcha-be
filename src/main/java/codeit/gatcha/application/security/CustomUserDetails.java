@@ -1,4 +1,4 @@
-package codeit.gatcha.security;
+package codeit.gatcha.application.security;
 
 import codeit.gatcha.domain.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;

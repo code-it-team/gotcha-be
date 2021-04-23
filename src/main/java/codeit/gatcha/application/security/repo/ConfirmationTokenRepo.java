@@ -1,6 +1,6 @@
-package codeit.gatcha.security.repo;
+package codeit.gatcha.application.security.repo;
 
-import codeit.gatcha.security.entity.ConfirmationToken;
+import codeit.gatcha.application.security.entity.ConfirmationToken;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
