@@ -68,10 +68,7 @@ public class SignUpService {
 
     private ResponseEntity<String> activateUserAccount(ConfirmationToken confirmationToken) {
         User user = confirmationToken.getUser();
-        userRepo.
-                findByEmail(user.getEmail()).
-                ifPresent(this::enableUserAccount);
-
+        enableUserAccount(user);
         return ResponseEntity.ok().body(String.format("%s account has been activated", user.getEmail()));
     }
 

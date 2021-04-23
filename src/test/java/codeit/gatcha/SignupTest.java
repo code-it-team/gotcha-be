@@ -7,7 +7,6 @@ import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
 import codeit.gatcha.security.entity.Authority;
 import codeit.gatcha.security.repo.AuthorityRepo;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
