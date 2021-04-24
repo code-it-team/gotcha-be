@@ -4,22 +4,31 @@ package codeit.gatcha.application.global;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 
 @ControllerAdvice
-public class InternalServerErrorAdvice {
-    private final Logger log = LoggerFactory.getLogger(InternalServerErrorAdvice.class);
+public class GlobalErrorHandling {
+    private final Logger log = LoggerFactory.getLogger(GlobalErrorHandling.class);
 
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> internalServerErrorHandler(RuntimeException e){
+    public ResponseEntity<?> internalServerErrorHandler(Exception e){
         log.error("An internal server error happened",e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body("An error happened in the API, please report the incident");
+    }
+
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> internalServerErrorHandler(HttpRequestMethodNotSupportedException e){
+        log.error(String.format("An unsupported method call %s", e.getMessage()));
+        return ResponseEntity.status(METHOD_NOT_ALLOWED).body("An unsupported method call, please check the API docs");
     }
 }
