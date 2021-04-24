@@ -1,5 +1,6 @@
 package codeit.gatcha.application.security.controller;
 
+import codeit.gatcha.application.global.DTO.SingleMessageResponse;
 import codeit.gatcha.application.security.DTO.AuthenticationRequest;
 import codeit.gatcha.application.security.DTO.AuthenticationResponse;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
@@ -30,7 +31,7 @@ public class AuthenticationController {
             verifyAuthenticationRequest(authenticationRequest);
             return createAuthToken(authenticationRequest);
         }catch (AuthenticationException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Email or Password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new SingleMessageResponse("Wrong Email or Password"));
         }
     }
 

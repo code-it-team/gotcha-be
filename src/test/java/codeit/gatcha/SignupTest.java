@@ -1,5 +1,6 @@
 package codeit.gatcha;
 
+import codeit.gatcha.application.global.DTO.SingleMessageResponse;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
@@ -39,7 +40,7 @@ public class SignupTest {
         SignUpDTO signUpDTO = new SignUpDTO("test@email", "pass");
         ResponseEntity<Object> response = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("The email test@email is already in use", response.getBody());
+        assertEquals("The email test@email is already in use", ((SingleMessageResponse) response.getBody()).getResponse());
     }
 
     @Test

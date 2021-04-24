@@ -1,5 +1,6 @@
 package codeit.gatcha.domain.user.service.signUp;
 
+import codeit.gatcha.application.global.DTO.SingleMessageResponse;
 import codeit.gatcha.application.security.entity.ConfirmationToken;
 import codeit.gatcha.application.security.repo.AuthorityRepo;
 import codeit.gatcha.application.security.repo.ConfirmationTokenRepo;
@@ -35,17 +36,21 @@ public class SignUpService {
                 orElseGet(() -> createNewUser(signUpDTO));
     }
 
-    public ResponseEntity<String> confirmUserAccount(String confirmationToken) {
+    public ResponseEntity<SingleMessageResponse> confirmUserAccount(String confirmationToken) {
         return confirmationTokenRepo.
                 findByConfirmationToken(confirmationToken).
                 map(this::activateUserAccount).
-                orElseGet(() -> new ResponseEntity<>(String.format("The token %s isn't found", confirmationToken), HttpStatus.NOT_FOUND));
+                orElseGet(() -> createTokenNotFoundResponse(confirmationToken));
+    }
+
+    private ResponseEntity<SingleMessageResponse> createTokenNotFoundResponse(String confirmationToken) {
+        return new ResponseEntity<>(new SingleMessageResponse(String.format("The token %s isn't found", confirmationToken)), HttpStatus.NOT_FOUND);
     }
 
     private ResponseEntity<Object> createEmailAlreadyInUseMessage(User user) {
         return ResponseEntity.
                 status(HttpStatus.CONFLICT).
-                body(String.format("The email %s is already in use", user.getEmail()));
+                body(new SingleMessageResponse(String.format("The email %s is already in use", user.getEmail())));
     }
 
     private ResponseEntity<Object> createNewUser(SignUpDTO signUpDTO) {
@@ -64,10 +69,10 @@ public class SignUpService {
                 build();
     }
 
-    private ResponseEntity<String> activateUserAccount(ConfirmationToken confirmationToken) {
+    private ResponseEntity<SingleMessageResponse> activateUserAccount(ConfirmationToken confirmationToken) {
         User user = confirmationToken.getUser();
         enableUserAccount(user);
-        return ResponseEntity.ok().body(String.format("%s account has been activated", user.getEmail()));
+        return ResponseEntity.ok().body(new SingleMessageResponse(String.format("%s account has been activated", user.getEmail())));
     }
 
     private void enableUserAccount(User user) {
