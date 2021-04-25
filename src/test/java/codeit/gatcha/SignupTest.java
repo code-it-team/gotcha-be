@@ -1,18 +1,22 @@
 package codeit.gatcha;
 
-import codeit.gatcha.application.global.DTO.APIResponse;
+import codeit.gatcha.API.DTO.APIResponse;
+import codeit.gatcha.API.service.API_SignUpService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
+import codeit.gatcha.domain.user.DTO.UserDTO;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
 import codeit.gatcha.application.security.entity.Authority;
 import codeit.gatcha.application.security.repo.AuthorityRepo;
+import codeit.gatcha.domain.user.service.signUp.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import java.util.Optional;
@@ -32,39 +36,41 @@ public class SignupTest {
     @Mock
     EmailConfirmationService emailConfirmationService;
     @InjectMocks
-    private SignUpService signUpService;
+    private API_SignUpService api_signUpService;
+    @Mock
+    private UserService userService;
 
     @Test
     void givenAnEmailAlreadyUsed_GetConflictResponse(){
-        User user = User.builder().email("test@email").build();
-        doReturn(Optional.of(user)).when(userRepo).findByEmail("test@email");
+        doReturn(true).when(userService).emailIsUsed("test@email");
         SignUpDTO signUpDTO = new SignUpDTO("test@email", "pass");
-        ResponseEntity<APIResponse> response = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
+        ResponseEntity<APIResponse> response = api_signUpService.signUpAndSendConfirmationEmail(signUpDTO);
         assertEquals(CONFLICT, response.getStatusCode());
 
-        APIResponse body = (APIResponse) response.getBody();
+        APIResponse body = response.getBody();
         assertEquals("The email test@email is already in use", body.getResponse());
         assertEquals(CONFLICT.value(), body.getStatusCode());
     }
 
     @Test
     void givenAValidSignUpDTO_SuccessfullyAddNewUser(){
-        Authority authority = new Authority();
-        doReturn(authority).when(authorityRepo).findByRole("ROLE_USER");
+
+        doReturn(false).when(userService).emailIsUsed("user@test");
+
+        doReturn(new Authority()).when(authorityRepo).findByRole("ROLE_USER");
 
         SignUpDTO signUpDTO = new SignUpDTO("user@test", "pass");
-        doReturn(null).when(userRepo).save(Mockito.any());
+        doReturn(User.builder().email("user@test")).
+                when(userRepo).
+                save(Mockito.any());
 
         doNothing().when(emailConfirmationService).createAndSendConfirmationTokenToUser(Mockito.any());
 
-        ResponseEntity<APIResponse> result = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
+        ResponseEntity<APIResponse> result = api_signUpService.signUpAndSendConfirmationEmail(signUpDTO);
 
         assertEquals(CREATED, result.getStatusCode());
-        User user = (User) result.getBody().getResponse();
+        UserDTO user = (UserDTO) result.getBody().getResponse();
         assertEquals("user@test", user.getEmail());
-        assertEquals("pass", user.getPassword());
-        assertFalse(user.isEnabled());
-        assertEquals(authority, user.getAuthority());
     }
 
 

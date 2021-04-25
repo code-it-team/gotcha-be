@@ -1,7 +1,7 @@
-package codeit.gatcha.application.global;
+package codeit.gatcha.API;
 
 
-import codeit.gatcha.application.global.DTO.APIResponse;
+import codeit.gatcha.API.DTO.APIResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
