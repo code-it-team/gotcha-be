@@ -1,15 +1,16 @@
 package codeit.gatcha;
 
-import codeit.gatcha.application.global.DTO.SingleMessageResponse;
+import codeit.gatcha.application.global.DTO.APIResponse;
 import codeit.gatcha.application.global.GlobalErrorHandling;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 
 @ExtendWith(MockitoExtension.class)
 public class GlobalErrorHandlingTest {
@@ -19,15 +20,20 @@ public class GlobalErrorHandlingTest {
     @Test
     void givenInternalServerError_GetResponse(){
         ResponseEntity result = globalErrorHandling.internalServerErrorHandler(new Exception());
-        assertEquals(result.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
-        assertEquals("An error happened in the API, please report the incident", ((SingleMessageResponse)result.getBody()).getResponse());
+        assertEquals(INTERNAL_SERVER_ERROR, result.getStatusCode());
+
+        APIResponse body = (APIResponse) result.getBody();
+        assertEquals(INTERNAL_SERVER_ERROR.value(), body.getStatusCode());
+        assertEquals("An error happened in the API, please report the incident", body.getResponse());
     }
 
     @Test
     void givenMethodNotFoundError_GetResponse(){
         ResponseEntity result = globalErrorHandling.methodNotAllowedErrorHandler(new HttpRequestMethodNotSupportedException("test"));
-        assertEquals(result.getStatusCode(), HttpStatus.METHOD_NOT_ALLOWED);
-        assertEquals("An unsupported method call, please check the API docs", ((SingleMessageResponse)result.getBody()).getResponse());
+        assertEquals(result.getStatusCode(), METHOD_NOT_ALLOWED);
+        APIResponse body = (APIResponse) result.getBody();
+        assertEquals("An unsupported method call, please check the API docs", body.getResponse());
+        assertEquals(METHOD_NOT_ALLOWED.value(), body.getStatusCode());
     }
 
 }

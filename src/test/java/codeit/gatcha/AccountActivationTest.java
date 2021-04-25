@@ -1,6 +1,6 @@
 package codeit.gatcha;
 
-import codeit.gatcha.application.global.DTO.SingleMessageResponse;
+import codeit.gatcha.application.global.DTO.APIResponse;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
@@ -11,12 +11,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountActivationTest {
@@ -30,10 +31,10 @@ public class AccountActivationTest {
     @Test
     void givenAConfirmationToken_DetectItsNotFound(){
         doReturn(Optional.empty()).when(confirmationTokenRepo).findByConfirmationToken("testToken");
-        ResponseEntity<SingleMessageResponse> result = signUpService.confirmUserAccount("testToken");
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        assertEquals("The token testToken isn't found",
-                result.getBody().getResponse());
+        ResponseEntity<APIResponse> result = signUpService.confirmUserAccount("testToken");
+        assertEquals(NOT_FOUND, result.getStatusCode());
+        assertEquals("The token testToken isn't found", result.getBody().getResponse());
+        assertEquals(NOT_FOUND.value(), result.getBody().getStatusCode());
     }
 
     @Test
@@ -44,9 +45,10 @@ public class AccountActivationTest {
         doReturn(Optional.of(confirmationToken)).when(confirmationTokenRepo).findByConfirmationToken("tokenTest");
         doReturn(null).when(userRepo).save(user);
 
-        ResponseEntity<SingleMessageResponse> result = signUpService.confirmUserAccount("tokenTest");
-        assertEquals(HttpStatus.OK, result.getStatusCode());
+        ResponseEntity<APIResponse> result = signUpService.confirmUserAccount("tokenTest");
+        assertEquals(OK, result.getStatusCode());
         assertEquals("email.email account has been activated", result.getBody().getResponse());
+        assertEquals(OK.value(), result.getBody().getStatusCode());
         assertTrue(user.isEnabled());
     }
 

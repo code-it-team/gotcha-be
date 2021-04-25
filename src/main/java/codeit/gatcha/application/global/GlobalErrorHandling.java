@@ -1,7 +1,7 @@
 package codeit.gatcha.application.global;
 
 
-import codeit.gatcha.application.global.DTO.SingleMessageResponse;
+import codeit.gatcha.application.global.DTO.APIResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +20,18 @@ public class GlobalErrorHandling {
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> internalServerErrorHandler(Exception e){
+    public ResponseEntity<APIResponse> internalServerErrorHandler(Exception e){
         log.error("An internal server error happened",e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).
-                body(new SingleMessageResponse("An error happened in the API, please report the incident"));
+                body(new APIResponse("An error happened in the API, please report the incident", INTERNAL_SERVER_ERROR.value()));
     }
 
     @ResponseStatus(METHOD_NOT_ALLOWED)
     @ResponseBody
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<?> methodNotAllowedErrorHandler(HttpRequestMethodNotSupportedException e){
+    public ResponseEntity<APIResponse> methodNotAllowedErrorHandler(HttpRequestMethodNotSupportedException e){
         log.error(String.format("An unsupported method call %s", e.getMessage()));
         return ResponseEntity.status(METHOD_NOT_ALLOWED).
-                body(new SingleMessageResponse("An unsupported method call, please check the API docs"));
+                body(new APIResponse("An unsupported method call, please check the API docs", METHOD_NOT_ALLOWED.value()));
     }
 }

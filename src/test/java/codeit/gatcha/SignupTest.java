@@ -1,6 +1,6 @@
 package codeit.gatcha;
 
-import codeit.gatcha.application.global.DTO.SingleMessageResponse;
+import codeit.gatcha.application.global.DTO.APIResponse;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
@@ -14,13 +14,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @ExtendWith(MockitoExtension.class)
 public class SignupTest {
@@ -38,9 +39,12 @@ public class SignupTest {
         User user = User.builder().email("test@email").build();
         doReturn(Optional.of(user)).when(userRepo).findByEmail("test@email");
         SignUpDTO signUpDTO = new SignUpDTO("test@email", "pass");
-        ResponseEntity<Object> response = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("The email test@email is already in use", ((SingleMessageResponse) response.getBody()).getResponse());
+        ResponseEntity<APIResponse> response = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
+        assertEquals(CONFLICT, response.getStatusCode());
+
+        APIResponse body = (APIResponse) response.getBody();
+        assertEquals("The email test@email is already in use", body.getResponse());
+        assertEquals(CONFLICT.value(), body.getStatusCode());
     }
 
     @Test
@@ -53,10 +57,10 @@ public class SignupTest {
 
         doNothing().when(emailConfirmationService).createAndSendConfirmationTokenToUser(Mockito.any());
 
-        ResponseEntity<Object> result = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
+        ResponseEntity<APIResponse> result = signUpService.signUpAndSendConfirmationEmail(signUpDTO);
 
-        assertEquals(HttpStatus.CREATED, result.getStatusCode());
-        User user = (User) result.getBody();
+        assertEquals(CREATED, result.getStatusCode());
+        User user = (User) result.getBody().getResponse();
         assertEquals("user@test", user.getEmail());
         assertEquals("pass", user.getPassword());
         assertFalse(user.isEnabled());

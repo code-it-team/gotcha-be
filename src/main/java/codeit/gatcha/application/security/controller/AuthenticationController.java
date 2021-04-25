@@ -1,6 +1,6 @@
 package codeit.gatcha.application.security.controller;
 
-import codeit.gatcha.application.global.DTO.SingleMessageResponse;
+import codeit.gatcha.application.global.DTO.APIResponse;
 import codeit.gatcha.application.security.DTO.AuthenticationRequest;
 import codeit.gatcha.application.security.DTO.AuthenticationResponse;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
@@ -8,7 +8,6 @@ import codeit.gatcha.application.security.service.JwtService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController @RequiredArgsConstructor
 public class AuthenticationController {
@@ -31,7 +31,7 @@ public class AuthenticationController {
             verifyAuthenticationRequest(authenticationRequest);
             return createAuthToken(authenticationRequest);
         }catch (AuthenticationException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new SingleMessageResponse("Wrong Email or Password"));
+            return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse("Wrong Email or Password", UNAUTHORIZED.value()));
         }
     }
 
