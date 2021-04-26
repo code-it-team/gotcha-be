@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepo confirmationTokenRepo;
 
-    public boolean confirmationTokenExists(String confirmationToken){
-        return confirmationTokenRepo.findByConfirmationToken(confirmationToken).isPresent();
+    public boolean confirmationTokenDoesntExist(String confirmationToken){
+        return confirmationTokenRepo.findByConfirmationToken(confirmationToken).isEmpty();
     }
 }

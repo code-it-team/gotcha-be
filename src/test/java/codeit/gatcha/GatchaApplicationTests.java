@@ -4,17 +4,13 @@ import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
-import lombok.AllArgsConstructor;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 @SpringBootTest
 @TestPropertySource(

@@ -44,7 +44,7 @@ public class API_SignUpService {
     }
 
     public ResponseEntity<APIResponse> confirmUserAccount(String confirmationToken) {
-        if (confirmationTokenService.confirmationTokenExists(confirmationToken))
+        if (confirmationTokenService.confirmationTokenDoesntExist(confirmationToken))
             return createTokenNotFoundResponse(confirmationToken);
         else
             return activateUserAccount(confirmationToken);

@@ -1,14 +1,16 @@
 package codeit.gatcha;
 
 import codeit.gatcha.API.DTO.APIResponse;
+import codeit.gatcha.API.service.API_SignUpService;
+import codeit.gatcha.application.security.entity.ConfirmationToken;
+import codeit.gatcha.application.security.service.ConfirmationTokenService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
-import codeit.gatcha.application.security.entity.ConfirmationToken;
 import codeit.gatcha.application.security.repo.ConfirmationTokenRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
@@ -25,31 +27,41 @@ public class AccountActivationTest {
     UserRepo userRepo;
     @Mock
     ConfirmationTokenRepo confirmationTokenRepo;
-    @InjectMocks
-    SignUpService signUpService;
+    @Mock
+    ConfirmationTokenService confirmationTokenService;
 
-/*    @Test
+    SignUpService signUpService;
+    API_SignUpService api_signUpService;
+
+    @BeforeEach
+    void setUp(){
+        signUpService = new SignUpService(userRepo, null, confirmationTokenRepo);
+        api_signUpService = new API_SignUpService(signUpService, null, null, confirmationTokenService);
+    }
+
+    @Test
     void givenAConfirmationToken_DetectItsNotFound(){
-        doReturn(Optional.empty()).when(confirmationTokenRepo).findByConfirmationToken("testToken");
-        ResponseEntity<APIResponse> result = signUpService.confirmUserAccount("testToken");
+        doReturn(true).when(confirmationTokenService).confirmationTokenDoesntExist("testToken");
+        ResponseEntity<APIResponse> result = api_signUpService.confirmUserAccount("testToken");
         assertEquals(NOT_FOUND, result.getStatusCode());
         assertEquals("The token testToken isn't found", result.getBody().getResponse());
         assertEquals(NOT_FOUND.value(), result.getBody().getStatusCode());
-    }*/
+    }
 
-/*    @Test
+    @Test
     void givenAConfirmationToken_activateUser(){
         User user = User.builder().email("email.email").build();
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
-        doReturn(Optional.of(confirmationToken)).when(confirmationTokenRepo).findByConfirmationToken("tokenTest");
+        doReturn(false).when(confirmationTokenService).confirmationTokenDoesntExist("tokenTest");
         doReturn(null).when(userRepo).save(user);
+        doReturn(Optional.of(confirmationToken)).when(confirmationTokenRepo).findByConfirmationToken("tokenTest");
 
-        ResponseEntity<APIResponse> result = signUpService.confirmUserAccount("tokenTest");
+        ResponseEntity<APIResponse> result = api_signUpService.confirmUserAccount("tokenTest");
         assertEquals(OK, result.getStatusCode());
-        assertEquals("email.email account has been activated", result.getBody().getResponse());
+        assertEquals("The account has been activated", result.getBody().getResponse());
         assertEquals(OK.value(), result.getBody().getStatusCode());
         assertTrue(user.isEnabled());
-    }*/
+    }
 
 }

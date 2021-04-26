@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service @AllArgsConstructor @NoArgsConstructor
+@Service @RequiredArgsConstructor
 public class SignUpService {
-    private UserRepo userRepo;
-    private AuthorityRepo authorityRepo;
-    private ConfirmationTokenRepo confirmationTokenRepo;
+    private final UserRepo userRepo;
+    private final AuthorityRepo authorityRepo;
+    private final ConfirmationTokenRepo confirmationTokenRepo;
 
     public User createNewUser(SignUpDTO signUpDTO) {
         User newUser = createUserFromSignUpDTO(signUpDTO);
