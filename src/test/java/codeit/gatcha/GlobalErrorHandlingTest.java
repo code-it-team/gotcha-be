@@ -24,7 +24,7 @@ public class GlobalErrorHandlingTest {
 
         APIResponse body = (APIResponse) result.getBody();
         assertEquals(INTERNAL_SERVER_ERROR.value(), body.getStatusCode());
-        assertEquals("An error happened in the API, please report the incident", body.getResponse());
+        assertEquals("An error happened in the API, please report the incident", body.getMessage());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class GlobalErrorHandlingTest {
         ResponseEntity result = globalErrorHandling.methodNotAllowedErrorHandler(new HttpRequestMethodNotSupportedException("test"));
         assertEquals(result.getStatusCode(), METHOD_NOT_ALLOWED);
         APIResponse body = (APIResponse) result.getBody();
-        assertEquals("An unsupported method call, please check the API docs", body.getResponse());
+        assertEquals("An unsupported method call, please check the API docs", body.getMessage());
         assertEquals(METHOD_NOT_ALLOWED.value(), body.getStatusCode());
     }
 

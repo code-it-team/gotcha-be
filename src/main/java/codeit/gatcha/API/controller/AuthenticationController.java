@@ -23,7 +23,7 @@ public class AuthenticationController {
             AuthenticationResponse authToken = authService.createAuthToken(authenticationRequest);
             return ResponseEntity.ok(authToken);
         }catch (AuthenticationException e){
-            return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse("Wrong Email or Password", UNAUTHORIZED.value()));
+            return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse(UNAUTHORIZED.value(), "Wrong Email or Password"));
         }
     }
 

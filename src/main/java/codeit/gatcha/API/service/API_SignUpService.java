@@ -34,13 +34,13 @@ public class API_SignUpService {
         confirmationService.createAndSendConfirmationTokenToUser(user);
         return ResponseEntity.
                 status(CREATED).
-                body(new APIResponse(new UserDTO(user), CREATED.value()));
+                body(new APIResponse(new UserDTO(user), CREATED.value(), "User has been successfully created"));
     }
 
     private ResponseEntity<APIResponse> createEmailAlreadyInUseMessage(SignUpDTO signUpDTO) {
         return ResponseEntity.
                 status(CONFLICT).
-                body(new APIResponse(String.format("The email %s is already in use", signUpDTO.getEmail()), CONFLICT.value()));
+                body(new APIResponse(CONFLICT.value(), String.format("The email %s is already in use", signUpDTO.getEmail())));
     }
 
     public ResponseEntity<APIResponse> confirmUserAccount(String confirmationToken) {
@@ -52,10 +52,10 @@ public class API_SignUpService {
 
     private ResponseEntity<APIResponse> activateUserAccount(String confirmationToken) {
         signUpService.activateUserAccount(confirmationToken);
-        return ResponseEntity.ok().body(new APIResponse("The account has been activated", OK.value()));
+        return ResponseEntity.ok().body(new APIResponse(OK.value(), "The account has been activated"));
     }
 
     private ResponseEntity<APIResponse> createTokenNotFoundResponse(String confirmationToken) {
-        return new ResponseEntity<>(new APIResponse(String.format("The token %s isn't found", confirmationToken), NOT_FOUND.value()), NOT_FOUND);
+        return new ResponseEntity<>(new APIResponse(NOT_FOUND.value(), String.format("The token %s isn't found", confirmationToken)), NOT_FOUND);
     }
 }

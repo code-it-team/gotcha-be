@@ -44,13 +44,13 @@ public class AccountActivationTest {
         doReturn(true).when(confirmationTokenService).confirmationTokenDoesntExist("testToken");
         ResponseEntity<APIResponse> result = api_signUpService.confirmUserAccount("testToken");
         assertEquals(NOT_FOUND, result.getStatusCode());
-        assertEquals("The token testToken isn't found", result.getBody().getResponse());
+        assertEquals("The token testToken isn't found", result.getBody().getMessage());
         assertEquals(NOT_FOUND.value(), result.getBody().getStatusCode());
     }
 
     @Test
     void givenAConfirmationToken_activateUser(){
-        User user = User.builder().email("email.email").build();
+        User user = new User();
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
         doReturn(false).when(confirmationTokenService).confirmationTokenDoesntExist("tokenTest");
@@ -59,7 +59,7 @@ public class AccountActivationTest {
 
         ResponseEntity<APIResponse> result = api_signUpService.confirmUserAccount("tokenTest");
         assertEquals(OK, result.getStatusCode());
-        assertEquals("The account has been activated", result.getBody().getResponse());
+        assertEquals("The account has been activated", result.getBody().getMessage());
         assertEquals(OK.value(), result.getBody().getStatusCode());
         assertTrue(user.isEnabled());
     }

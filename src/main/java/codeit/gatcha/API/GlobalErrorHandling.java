@@ -23,7 +23,7 @@ public class GlobalErrorHandling {
     public ResponseEntity<APIResponse> internalServerErrorHandler(Exception e){
         log.error("An internal server error happened",e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).
-                body(new APIResponse("An error happened in the API, please report the incident", INTERNAL_SERVER_ERROR.value()));
+                body(new APIResponse(INTERNAL_SERVER_ERROR.value(), "An error happened in the API, please report the incident"));
     }
 
     @ResponseStatus(METHOD_NOT_ALLOWED)
@@ -32,6 +32,6 @@ public class GlobalErrorHandling {
     public ResponseEntity<APIResponse> methodNotAllowedErrorHandler(HttpRequestMethodNotSupportedException e){
         log.error(String.format("An unsupported method call %s", e.getMessage()));
         return ResponseEntity.status(METHOD_NOT_ALLOWED).
-                body(new APIResponse("An unsupported method call, please check the API docs", METHOD_NOT_ALLOWED.value()));
+                body(new APIResponse( METHOD_NOT_ALLOWED.value(),"An unsupported method call, please check the API docs"));
     }
 }

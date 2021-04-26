@@ -53,7 +53,7 @@ public class SignupTest {
         assertEquals(CONFLICT, response.getStatusCode());
 
         APIResponse body = response.getBody();
-        assertEquals("The email test@email is already in use", body.getResponse());
+        assertEquals("The email test@email is already in use", body.getMessage());
         assertEquals(CONFLICT.value(), body.getStatusCode());
     }
 
@@ -73,9 +73,8 @@ public class SignupTest {
         ResponseEntity<APIResponse> result = api_signUpService.signUpAndSendConfirmationEmail(signUpDTO);
 
         assertEquals(CREATED, result.getStatusCode());
-        UserDTO user = (UserDTO) result.getBody().getResponse();
+        UserDTO user = (UserDTO) result.getBody().getBody();
         assertEquals("user@test", user.getEmail());
+        assertEquals("User has been successfully created", result.getBody().getMessage());
     }
-
-
 }
