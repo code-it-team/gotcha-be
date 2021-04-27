@@ -20,10 +20,6 @@ public class EmailConfirmationService {
     @Value("${spring.mail.username}")
     private String email;
 
-    @Value("${server.port}")
-    private Integer port;
-
-
     public void createAndSendConfirmationTokenToUser(User user){
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepo.save(confirmationToken);
@@ -43,7 +39,7 @@ public class EmailConfirmationService {
 
     private String getConfirmationLink(ConfirmationToken confirmationToken) {
         return "To confirm your account, please click here: " +
-                String.format("%s:%s/confirm-account?token=%s", rootAddress, port,confirmationToken.getConfirmationToken());
+                String.format("%s/confirm-account?token=%s", rootAddress,confirmationToken.getConfirmationToken());
     }
 
 }
