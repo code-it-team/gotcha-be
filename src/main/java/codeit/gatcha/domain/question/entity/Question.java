@@ -20,7 +20,4 @@ public class Question {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "question", fetch = FetchType.EAGER)
     private Set<Answer> answers = new HashSet<>();
 
-    @ManyToMany
-    private Set<User> users = new HashSet<>();
-
 }

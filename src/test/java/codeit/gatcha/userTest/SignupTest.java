@@ -1,4 +1,4 @@
-package codeit.gatcha;
+package codeit.gatcha.userTest;
 
 import codeit.gatcha.API.DTO.APIResponse;
 import codeit.gatcha.API.service.API_SignUpService;
