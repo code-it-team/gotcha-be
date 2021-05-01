@@ -10,12 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.reflect.Array;
+import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -45,5 +46,29 @@ public class UserQuestionServiceTest {
         assertEquals(2, user.getQuestions().size());
         assertEquals("q1", questions.next().getBody());
         assertEquals("q2", questions.next().getBody());
+    }
+
+    @Test
+    void givenAUser_AddANewQuestion(){
+        UserQuestionsService userQuestionsService = new UserQuestionsService(questionRepo, userRepo);
+
+        Question question = new Question();
+        User user = new User();
+
+        doReturn(Optional.of(question)).when(questionRepo).findById(166);
+        doReturn(user).when(userRepo).save(user);
+
+        userQuestionsService.checkQuestionExistenceAndAddUser(user, 166);
+
+        assertEquals(1, user.getQuestions().size());
+        assertEquals(question, user.getQuestions().iterator().next());
+    }
+
+    @Test
+    void givenAUserAndQuestion_DetectQuestionNotFound(){
+        UserQuestionsService userQuestionsService = new UserQuestionsService(questionRepo, userRepo);
+        assertThrows(EntityNotFoundException.class,
+                () -> userQuestionsService.
+                        checkQuestionExistenceAndAddUser(new User(), 123));
     }
 }
