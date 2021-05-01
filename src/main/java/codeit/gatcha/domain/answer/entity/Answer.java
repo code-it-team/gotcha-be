@@ -18,4 +18,8 @@ public class Answer {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Question question;
+
+    public Answer(String body) {
+        this.body = body;
+    }
 }
