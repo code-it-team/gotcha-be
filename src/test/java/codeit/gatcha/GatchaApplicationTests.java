@@ -33,8 +33,8 @@ class GatchaApplicationTests {
 
 		Question question = questionCreationService.
 				createQuestionWithAnswers("question1",
-						new HashSet<Answer>(Arrays.asList(answer1, answer2, answer3)));
-
+						new HashSet<>(Arrays.asList(answer1, answer2, answer3)));
+		questionRepo.deleteAll();
 		questionRepo.save(question);
 
 		List<Question> questionsFromDB = Lists.newArrayList(questionRepo.findAll().iterator());
