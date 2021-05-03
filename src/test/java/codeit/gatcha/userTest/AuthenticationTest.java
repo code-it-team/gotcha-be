@@ -45,16 +45,16 @@ public class AuthenticationTest {
 
     @Test
     public void givenAnAuthenticationRequest_DetectEmailNotFound(){
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest("email", "pass");
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest("email@email.com", "pass");
         AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
 
-        doReturn(Optional.empty()).when(userRepo).findByEmail("email");
+        doReturn(Optional.empty()).when(userRepo).findByEmail("email@email.com");
         ResponseEntity<?> result = authController.verifyAndCreateAuthToken(authenticationRequest);
 
         assertEquals(UNAUTHORIZED, result.getStatusCode());
         APIResponse apiResponse = (APIResponse) result.getBody();
         assertEquals(UNAUTHORIZED.value(), apiResponse.getStatusCode());
-        assertEquals("Wrong Email", apiResponse.getMessage());
+        assertEquals("The Email email@email.com does not exist", apiResponse.getMessage());
     }
 
     @Test

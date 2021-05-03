@@ -22,7 +22,9 @@ public class AuthenticationController {
     public ResponseEntity<?> verifyAndCreateAuthToken(@RequestBody AuthenticationRequest authenticationRequest){
         try{
             if (emailIsntFound(authenticationRequest))
-                return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse(UNAUTHORIZED.value(), "Wrong Email"));
+                return ResponseEntity.
+                        status(UNAUTHORIZED).
+                        body(new APIResponse(UNAUTHORIZED.value(), getWrongEmailMessage(authenticationRequest)));
 
             authService.verifyAuthenticationRequest(authenticationRequest);
             AuthenticationResponse authToken = authService.createAuthToken(authenticationRequest);
@@ -30,6 +32,10 @@ public class AuthenticationController {
         }catch (AuthenticationException e){
             return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse(UNAUTHORIZED.value(), "Wrong Password"));
         }
+    }
+
+    private String getWrongEmailMessage(AuthenticationRequest authenticationRequest) {
+        return String.format("The Email %s does not exist", authenticationRequest.getEmail());
     }
 
     private boolean emailIsntFound(AuthenticationRequest authenticationRequest) {
