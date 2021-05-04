@@ -12,9 +12,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -27,13 +30,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+        final Optional<Cookie> jwtCookie = getJwtCookie(request);
 
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
+        if (jwtCookie.isPresent()) {
+            jwt = jwtCookie.get().getValue();
             username = jwtService.extractUsername(jwt);
         }
 
@@ -41,6 +44,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             setAuthenticationInSecurityContext(request, username, jwt);
 
         chain.doFilter(request, response);
+    }
+
+    private Optional<Cookie> getJwtCookie(HttpServletRequest request) {
+        if (request.getCookies() == null )
+            return Optional.empty();
+
+        else return Arrays.stream(request.getCookies()).
+                filter(c -> c.getName().equals("jwt")).
+                findAny();
     }
 
     private void setAuthenticationInSecurityContext(HttpServletRequest request, String username, String jwt) {

@@ -11,8 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import java.util.Optional;
 import static org.mockito.Mockito.doReturn;
@@ -26,6 +29,8 @@ public class AuthenticationTest {
     AuthenticationService authenticationService;
     @Mock
     UserRepo userRepo;
+    @Mock
+    MockHttpServletResponse mockHttpServletResponse;
 
     @Test
     public void givenAnAuthenticationRequest_DetectWrongPassword(){
@@ -34,7 +39,7 @@ public class AuthenticationTest {
 
         doReturn(Optional.of(new User())).when(userRepo).findByEmail("email");
         doThrow(new AuthenticationException("test") {}).when(authenticationService).verifyAuthenticationRequest(authenticationRequest);
-        ResponseEntity<?> result = authController.verifyAndCreateAuthToken(authenticationRequest);
+        ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, null);
 
         assertEquals(UNAUTHORIZED, result.getStatusCode());
         APIResponse apiResponse = (APIResponse) result.getBody();
@@ -49,7 +54,7 @@ public class AuthenticationTest {
         AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
 
         doReturn(Optional.empty()).when(userRepo).findByEmail("email@email.com");
-        ResponseEntity<?> result = authController.verifyAndCreateAuthToken(authenticationRequest);
+        ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, null);
 
         assertEquals(UNAUTHORIZED, result.getStatusCode());
         APIResponse apiResponse = (APIResponse) result.getBody();
@@ -66,12 +71,13 @@ public class AuthenticationTest {
 
         doReturn(Optional.of(new User())).when(userRepo).findByEmail("email");
         doReturn(authenticationResponse).when(authenticationService).createAuthToken(authenticationRequest);
-        ResponseEntity<?> result = authController.verifyAndCreateAuthToken(authenticationRequest);
+        ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, mockHttpServletResponse);
 
         assertEquals(OK, result.getStatusCode());
-        AuthenticationResponse body = (AuthenticationResponse)result.getBody();
-        assertEquals("testJWT", body.getJwt());
-        assertEquals("email", body.getEmail());
+        APIResponse body = (APIResponse) result.getBody();
+
+        assertEquals("Welcome!", body.getMessage());
+        assertEquals(OK.value(), body.getStatusCode());
     }
 
 }

@@ -11,6 +11,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController @RequiredArgsConstructor
@@ -19,19 +22,35 @@ public class AuthenticationController {
     private final UserRepo userRepo;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> verifyAndCreateAuthToken(@RequestBody AuthenticationRequest authenticationRequest){
+    public ResponseEntity<?> checkEmailAndVerify(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response){
         try{
             if (emailIsntFound(authenticationRequest))
                 return ResponseEntity.
                         status(UNAUTHORIZED).
                         body(new APIResponse(UNAUTHORIZED.value(), getWrongEmailMessage(authenticationRequest)));
 
-            authService.verifyAuthenticationRequest(authenticationRequest);
-            AuthenticationResponse authToken = authService.createAuthToken(authenticationRequest);
-            return ResponseEntity.ok(authToken);
+            return verifyAndCreateAuthToken(authenticationRequest, response);
         }catch (AuthenticationException e){
             return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse(UNAUTHORIZED.value(), "Wrong Password"));
         }
+    }
+
+    private ResponseEntity<APIResponse> verifyAndCreateAuthToken(AuthenticationRequest authRequest, HttpServletResponse response) {
+        authService.verifyAuthenticationRequest(authRequest);
+        
+        createAuthTokenAndAddHttpOnlyCookie(response, authRequest);
+
+        return ResponseEntity.ok(new APIResponse(OK.value(), "Welcome!"));
+    }
+
+    private void createAuthTokenAndAddHttpOnlyCookie(HttpServletResponse response, AuthenticationRequest authenticationRequest) {
+        AuthenticationResponse authToken = authService.createAuthToken(authenticationRequest);
+
+        Cookie cookie = new Cookie("jwt", authToken.getJwt());
+
+        cookie.setHttpOnly(true);
+
+        response.addCookie(cookie);
     }
 
     private String getWrongEmailMessage(AuthenticationRequest authenticationRequest) {
