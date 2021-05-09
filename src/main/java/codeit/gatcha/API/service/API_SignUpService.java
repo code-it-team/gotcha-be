@@ -34,7 +34,7 @@ public class API_SignUpService {
         confirmationService.createAndSendConfirmationTokenToUser(user);
         return ResponseEntity.
                 status(CREATED).
-                body(new APIResponse(new UserDTO(user), CREATED.value(), "User has been successfully created"));
+                body(new APIResponse(new UserDTO(user), CREATED.value(), "A confirmation email has been sent. Check your inbox, please!"));
     }
 
     private ResponseEntity<APIResponse> createEmailAlreadyInUseMessage(SignUpDTO signUpDTO) {

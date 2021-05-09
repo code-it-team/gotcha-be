@@ -75,6 +75,6 @@ public class SignupTest {
         assertEquals(CREATED, result.getStatusCode());
         UserDTO user = (UserDTO) result.getBody().getBody();
         assertEquals("user@test", user.getEmail());
-        assertEquals("User has been successfully created", result.getBody().getMessage());
+        assertEquals("A confirmation email has been sent. Check your inbox, please!", result.getBody().getMessage());
     }
 }
