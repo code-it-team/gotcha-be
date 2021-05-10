@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component @Log4j2 @RequiredArgsConstructor
@@ -17,11 +18,7 @@ public class QuestionSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        Set<Answer> answers = new HashSet<>(Arrays.asList(
-                new Answer("Telephone call"),
-                new Answer("Email"),
-                new Answer("Whatsapp")));
-
+        List<String> answers = Arrays.asList("Telephone call", "Email", "Whatsapp");
         questionCreationService.createQuestionWithAnswers("How do you prefer to be contacted?", answers);
     }
 }

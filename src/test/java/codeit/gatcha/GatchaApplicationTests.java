@@ -27,13 +27,9 @@ class GatchaApplicationTests {
 
 	@Test
 	void givenQuestionWith3Answers_SuccessfullySavedToDB() {
-		Answer answer1 = Answer.builder().body("answer1").build();
-		Answer answer2 = Answer.builder().body("answer2").build();
-		Answer answer3 = Answer.builder().body("answer3").build();
 
 		Question question = questionCreationService.
-				createQuestionWithAnswers("question1",
-						new HashSet<>(Arrays.asList(answer1, answer2, answer3)));
+				createQuestionWithAnswers("question1", Arrays.asList("answer1", "answer2", "answer3"));
 		questionRepo.deleteAll();
 		questionRepo.save(question);
 

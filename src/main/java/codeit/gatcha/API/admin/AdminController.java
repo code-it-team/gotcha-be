@@ -1,4 +1,4 @@
-package codeit.gatcha.API.admin.controller;
+package codeit.gatcha.API.admin;
 
 import codeit.gatcha.API.DTO.APIResponse;
 import org.springframework.http.HttpStatus;

@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -26,8 +24,7 @@ public class QuestionCreationTest {
     @Test
     void givenAnswers_CreateQuestion(){
         QuestionCreationService questionCreationService = new QuestionCreationService(questionRepo);
-        Set<Answer> answers = new HashSet<>(Arrays.asList(
-                new Answer("answer1"), new Answer("answer2")));
+        List<String> answers = Arrays.asList("answer1","answer2");
 
         doAnswer(returnsFirstArg()).when(questionRepo).save(any());
         Question question = questionCreationService.createQuestionWithAnswers("test question", answers);
