@@ -20,4 +20,15 @@ public class Question {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "question", fetch = FetchType.EAGER)
     private Set<Answer> answers = new HashSet<>();
 
+    private boolean valid = true;
+
+    public Question(Integer id, String body, Set<Answer> answers) {
+        this.id = id;
+        this.body = body;
+        this.answers = answers;
+    }
+
+    public Question(String body) {
+        this.body = body;
+    }
 }

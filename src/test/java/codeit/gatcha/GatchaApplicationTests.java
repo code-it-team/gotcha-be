@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @TestPropertySource(
@@ -35,8 +36,11 @@ class GatchaApplicationTests {
 
 		List<Question> questionsFromDB = Lists.newArrayList(questionRepo.findAll().iterator());
 		assertEquals(1, questionsFromDB.size());
-		assertEquals("question1", questionsFromDB.get(0).getBody());
-		assertEquals(3, questionsFromDB.get(0).getAnswers().size());
+		Question questionFromDB = questionsFromDB.get(0);
+
+		assertTrue(questionFromDB.isValid());
+		assertEquals("question1", questionFromDB.getBody());
+		assertEquals(3, questionFromDB.getAnswers().size());
 	}
 
 }

@@ -15,7 +15,7 @@ public class QuestionCreationService {
 
     public Question createQuestionWithAnswers(String body, List<String> answersAsStrings){
         Set<Answer> answers = createAnswersFromStrings(answersAsStrings);
-        Question question = Question.builder().body(body).build();
+        Question question = new Question(body);
         addAnswersToQuestion(question, answers);
         return questionRepo.save(question);
     }
