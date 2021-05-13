@@ -16,6 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @ExtendWith(MockitoExtension.class)
 public class SignInCheckTest {
@@ -35,8 +36,8 @@ public class SignInCheckTest {
 
         ResponseEntity<APIResponse> result =  authController.userIsSignedIn("email", mockHttpServletRequest);
 
-        assertEquals(OK, result.getStatusCode());
-        assertEquals(OK.value(), result.getBody().getStatusCode());
+        assertEquals(UNAUTHORIZED, result.getStatusCode());
+        assertEquals(UNAUTHORIZED.value(), result.getBody().getStatusCode());
         assertEquals("No Cookie is provided", result.getBody().getMessage());
     }
 
@@ -52,8 +53,8 @@ public class SignInCheckTest {
 
         ResponseEntity<APIResponse> result =  authController.userIsSignedIn("email2", mockHttpServletRequest);
 
-        assertEquals(OK, result.getStatusCode());
-        assertEquals(OK.value(), result.getBody().getStatusCode());
+        assertEquals(UNAUTHORIZED, result.getStatusCode());
+        assertEquals(UNAUTHORIZED.value(), result.getBody().getStatusCode());
         assertEquals("The current loggedIn email isn't the one sent", result.getBody().getMessage());
     }
 
