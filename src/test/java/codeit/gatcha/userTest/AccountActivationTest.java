@@ -1,9 +1,9 @@
 package codeit.gatcha.userTest;
 
 import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.service.API_SignUpService;
+import codeit.gatcha.API.service.security.API_SignUpService;
 import codeit.gatcha.application.security.entity.ConfirmationToken;
-import codeit.gatcha.application.security.service.ConfirmationTokenService;
+import codeit.gatcha.API.service.security.ConfirmationTokenService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;

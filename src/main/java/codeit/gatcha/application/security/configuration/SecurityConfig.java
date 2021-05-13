@@ -1,6 +1,6 @@
 package codeit.gatcha.application.security.configuration;
 
-import codeit.gatcha.application.security.filter.JwtRequestFilter;
+import codeit.gatcha.API.filter.JwtRequestFilter;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/signin",
                     "/h2-console/**",
                     "/signup",
-                    "/confirm-account"};
+                    "/confirm-account",
+                    "/isSignedIn"};
 
     private final String[] ADMIN_ALLOWED_URLS = {
             "/admin/**", "/actuator/health"

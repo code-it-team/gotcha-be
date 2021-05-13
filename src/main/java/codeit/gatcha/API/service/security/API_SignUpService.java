@@ -1,7 +1,6 @@
-package codeit.gatcha.API.service;
+package codeit.gatcha.API.service.security;
 
 import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.application.security.service.ConfirmationTokenService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
 import codeit.gatcha.domain.user.entity.User;

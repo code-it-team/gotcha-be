@@ -1,7 +1,7 @@
 package codeit.gatcha.userTest;
 
 import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.service.API_SignUpService;
+import codeit.gatcha.API.service.security.API_SignUpService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
 import codeit.gatcha.domain.user.entity.User;

@@ -1,7 +1,7 @@
-package codeit.gatcha.application.security.filter;
+package codeit.gatcha.API.filter;
 
 import codeit.gatcha.application.security.service.CustomUserDetailService;
-import codeit.gatcha.application.security.service.JwtService;
+import codeit.gatcha.API.service.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,31 +29,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        final Optional<Cookie> jwtCookie = jwtService.getJwtCookie(request);
 
-        final Optional<Cookie> jwtCookie = getJwtCookie(request);
-
-        String username = null;
+        String email = null;
         String jwt = null;
 
         if (jwtCookie.isPresent()) {
             jwt = jwtCookie.get().getValue();
-            username = jwtService.extractUsername(jwt);
+            email = jwtService.extractEmail(jwt);
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null)
-            setAuthenticationInSecurityContext(request, username, jwt);
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null)
+            setAuthenticationInSecurityContext(request, email, jwt);
 
         chain.doFilter(request, response);
     }
 
-    private Optional<Cookie> getJwtCookie(HttpServletRequest request) {
-        if (request.getCookies() == null )
-            return Optional.empty();
-
-        else return Arrays.stream(request.getCookies()).
-                filter(c -> c.getName().equals("jwt")).
-                findAny();
-    }
 
     private void setAuthenticationInSecurityContext(HttpServletRequest request, String username, String jwt) {
         UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);

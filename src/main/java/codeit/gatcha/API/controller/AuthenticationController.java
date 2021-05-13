@@ -1,17 +1,17 @@
 package codeit.gatcha.API.controller;
 
 import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.application.security.DTO.AuthenticationRequest;
-import codeit.gatcha.application.security.DTO.AuthenticationResponse;
-import codeit.gatcha.application.security.service.AuthenticationService;
+import codeit.gatcha.API.DTO.security.AuthenticationRequest;
+import codeit.gatcha.API.DTO.security.AuthenticationResponse;
+import codeit.gatcha.API.service.security.AuthenticationService;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -33,6 +33,11 @@ public class AuthenticationController {
         }catch (AuthenticationException e){
             return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse(UNAUTHORIZED.value(), "Wrong Password"));
         }
+    }
+
+    @GetMapping("/isSignedIn")
+    public ResponseEntity<APIResponse> userIsSignedIn(@RequestParam String email, HttpServletRequest httpServletRequest) {
+        return authService.userIsSignedIn(email, httpServletRequest);
     }
 
     private ResponseEntity<APIResponse> verifyAndCreateAuthToken(AuthenticationRequest authRequest, HttpServletResponse response) {
@@ -60,5 +65,6 @@ public class AuthenticationController {
     private boolean emailIsntFound(AuthenticationRequest authenticationRequest) {
         return userRepo.findByEmail(authenticationRequest.getEmail()).isEmpty();
     }
+
 
 }

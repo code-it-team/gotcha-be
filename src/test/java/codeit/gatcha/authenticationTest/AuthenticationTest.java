@@ -1,20 +1,18 @@
-package codeit.gatcha.userTest;
+package codeit.gatcha.authenticationTest;
 
 import codeit.gatcha.API.DTO.APIResponse;
 import codeit.gatcha.API.controller.AuthenticationController;
-import codeit.gatcha.application.security.DTO.AuthenticationRequest;
-import codeit.gatcha.application.security.DTO.AuthenticationResponse;
-import codeit.gatcha.application.security.service.AuthenticationService;
+import codeit.gatcha.API.DTO.security.AuthenticationRequest;
+import codeit.gatcha.API.DTO.security.AuthenticationResponse;
+import codeit.gatcha.API.service.security.AuthenticationService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import java.util.Optional;
@@ -79,5 +77,4 @@ public class AuthenticationTest {
         assertEquals("Welcome!", body.getMessage());
         assertEquals(OK.value(), body.getStatusCode());
     }
-
 }

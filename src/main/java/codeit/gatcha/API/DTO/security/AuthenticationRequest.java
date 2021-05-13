@@ -1,4 +1,4 @@
-package codeit.gatcha.application.security.DTO;
+package codeit.gatcha.API.DTO.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,4 +14,8 @@ import java.io.Serializable;
 public class AuthenticationRequest implements Serializable {
     private String email;
     private String password;
+
+    public AuthenticationRequest(String email) {
+        this.email = email;
+    }
 }
