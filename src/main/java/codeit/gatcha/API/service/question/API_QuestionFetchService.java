@@ -1,4 +1,4 @@
-package codeit.gatcha.API.service;
+package codeit.gatcha.API.service.question;
 
 import codeit.gatcha.API.DTO.question.outputDTO.AnswerDTO;
 import codeit.gatcha.API.DTO.question.outputDTO.QuestionDTO;

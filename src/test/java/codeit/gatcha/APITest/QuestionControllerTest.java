@@ -5,7 +5,7 @@ import codeit.gatcha.API.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
 import codeit.gatcha.API.DTO.question.outputDTO.QuestionDTO;
 import codeit.gatcha.API.DTO.question.outputDTO.QuestionsDTO;
 import codeit.gatcha.API.admin.question.controller.QuestionController_Admin;
-import codeit.gatcha.API.service.API_QuestionFetchService;
+import codeit.gatcha.API.service.question.API_QuestionFetchService;
 import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
@@ -34,7 +34,7 @@ public class QuestionControllerTest {
 
     @Test
     void givenQuestionIsCreatedSuccessfully_CheckResponseMessage(){
-        QuestionController_Admin questionController_admin = new QuestionController_Admin(questionCreationService, null);
+        QuestionController_Admin questionController_admin = new QuestionController_Admin(questionCreationService, null, null);
 
         NewQuestionWithAnswers_DTO question = new NewQuestionWithAnswers_DTO();
         doReturn(null).when(questionCreationService).createQuestionWithAnswers(any(), any());
@@ -48,7 +48,7 @@ public class QuestionControllerTest {
     @Test
     void given_2_QuestionsInDB_GetTheirDTOs(){
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo);
-        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService);
+        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null);
 
         Set<Answer> answers = new HashSet<>(Arrays.asList(new Answer("a1"), new Answer("a2")));
 
