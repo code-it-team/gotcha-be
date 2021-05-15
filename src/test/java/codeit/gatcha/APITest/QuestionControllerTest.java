@@ -6,7 +6,6 @@ import codeit.gatcha.API.DTO.question.outputDTO.QuestionDTO;
 import codeit.gatcha.API.DTO.question.outputDTO.QuestionsDTO;
 import codeit.gatcha.API.admin.question.controller.QuestionController_Admin;
 import codeit.gatcha.API.service.question.API_QuestionFetchService;
-import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
@@ -18,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -50,10 +47,8 @@ public class QuestionControllerTest {
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo);
         QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null);
 
-        Set<Answer> answers = new HashSet<>(Arrays.asList(new Answer("a1"), new Answer("a2")));
-
-        Question q1 = Question.builder().body("q1").answers(answers).build();
-        Question q2 = Question.builder().body("q2").answers(answers).build();
+        Question q1 = new Question("q1", "a1");
+        Question q2 = new Question("q2", "a2");
         doReturn(Arrays.asList(q1, q2)).when(questionRepo).findQuestionsByValidTrue();
 
         ResponseEntity<APIResponse> result = questionController_admin.getAllValidQuestions();
@@ -66,9 +61,9 @@ public class QuestionControllerTest {
         assertEquals(2, questions.size());
 
         assertEquals("q1", questions.get(0).getBody());
-        assertEquals(2, questions.get(0).getAnswers().size());
+        assertEquals("a1", questions.get(0).getAnswer());
 
         assertEquals("q2", questions.get(1).getBody());
-        assertEquals(2, questions.get(1).getAnswers().size());
+        assertEquals("a2", questions.get(1).getAnswer());
     }
 }

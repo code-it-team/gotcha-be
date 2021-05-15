@@ -20,7 +20,7 @@ public class QuestionController_Admin {
 
     @PostMapping("/admin/createQuestion")
     public ResponseEntity<APIResponse> createNewQuestion(@RequestBody NewQuestionWithAnswers_DTO newQuestion){
-        questionCreationService.createQuestionWithAnswers(newQuestion.getQuestionBody(), newQuestion.getAnswers());
+        questionCreationService.createQuestionWithAnswers(newQuestion.getQuestionBody(), newQuestion.getAnswer());
         return ResponseEntity.ok(new APIResponse(OK.value(), "The Question has been created successfully"));
     }
 

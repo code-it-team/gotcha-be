@@ -1,11 +1,16 @@
 package codeit.gatcha.API.DTO.question.outputDTO;
 
+import codeit.gatcha.domain.question.entity.Question;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import java.util.List;
 
 @Data @RequiredArgsConstructor
 public class QuestionDTO {
     private final String body;
-    private final List<AnswerDTO> answers;
+    private final String answer;
+
+    public QuestionDTO(Question question){
+        this.body = question.getBody();
+        this.answer = question.getAnswer();
+    }
 }

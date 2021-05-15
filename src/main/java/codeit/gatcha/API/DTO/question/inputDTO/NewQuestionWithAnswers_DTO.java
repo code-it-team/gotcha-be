@@ -6,5 +6,5 @@ import java.util.List;
 @Data
 public class NewQuestionWithAnswers_DTO {
     private String questionBody;
-    private List<String> answers;
+    private String answer;
 }

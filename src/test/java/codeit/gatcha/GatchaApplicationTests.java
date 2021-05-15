@@ -1,6 +1,5 @@
 package codeit.gatcha;
 
-import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
@@ -30,7 +29,7 @@ class GatchaApplicationTests {
 	void givenQuestionWith3Answers_SuccessfullySavedToDB() {
 
 		Question question = questionCreationService.
-				createQuestionWithAnswers("question1", Arrays.asList("answer1", "answer2", "answer3"));
+				createQuestionWithAnswers("question1", "answer1");
 		questionRepo.deleteAll();
 		questionRepo.save(question);
 
@@ -40,7 +39,7 @@ class GatchaApplicationTests {
 
 		assertTrue(questionFromDB.isValid());
 		assertEquals("question1", questionFromDB.getBody());
-		assertEquals(3, questionFromDB.getAnswers().size());
+		assertEquals("answer1", questionFromDB.getAnswer());
 	}
 
 }
