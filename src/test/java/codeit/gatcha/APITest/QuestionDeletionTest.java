@@ -1,8 +1,8 @@
 package codeit.gatcha.APITest;
 
-import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.admin.question.controller.QuestionController_Admin;
-import codeit.gatcha.API.service.question.API_QuestionDeletionService;
+import codeit.gatcha.API.client.DTO.APIResponse;
+import codeit.gatcha.API.admin.controller.QuestionController_Admin;
+import codeit.gatcha.API.client.service.question.API_QuestionDeletionService;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionDeletionService;

@@ -1,4 +1,4 @@
-package codeit.gatcha.API.service.security;
+package codeit.gatcha.API.client.service.security;
 
 import codeit.gatcha.application.security.repo.ConfirmationTokenRepo;
 import lombok.RequiredArgsConstructor;

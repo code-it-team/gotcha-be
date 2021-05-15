@@ -1,4 +1,4 @@
-package codeit.gatcha.API.DTO.question.outputDTO;
+package codeit.gatcha.API.client.DTO.question.outputDTO;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

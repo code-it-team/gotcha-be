@@ -1,7 +1,6 @@
-package codeit.gatcha.API.DTO.question.inputDTO;
+package codeit.gatcha.API.client.DTO.question.inputDTO;
 
 import lombok.Data;
-import java.util.List;
 
 @Data
 public class NewQuestionWithAnswers_DTO {

@@ -1,7 +1,7 @@
-package codeit.gatcha.API.filter;
+package codeit.gatcha.API.client.filter;
 
 import codeit.gatcha.application.security.service.CustomUserDetailService;
-import codeit.gatcha.API.service.security.JwtService;
+import codeit.gatcha.API.client.service.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 
 @RequiredArgsConstructor

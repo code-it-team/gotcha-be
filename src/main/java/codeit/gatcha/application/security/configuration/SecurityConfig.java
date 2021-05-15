@@ -1,6 +1,6 @@
 package codeit.gatcha.application.security.configuration;
 
-import codeit.gatcha.API.filter.JwtRequestFilter;
+import codeit.gatcha.API.client.filter.JwtRequestFilter;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,11 +1,11 @@
 package codeit.gatcha.APITest;
 
-import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
-import codeit.gatcha.API.DTO.question.outputDTO.QuestionDTO;
-import codeit.gatcha.API.DTO.question.outputDTO.QuestionsDTO;
-import codeit.gatcha.API.admin.question.controller.QuestionController_Admin;
-import codeit.gatcha.API.service.question.API_QuestionFetchService;
+import codeit.gatcha.API.client.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.admin.controller.QuestionController_Admin;
+import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

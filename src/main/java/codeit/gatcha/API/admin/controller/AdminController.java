@@ -1,6 +1,6 @@
-package codeit.gatcha.API.admin;
+package codeit.gatcha.API.admin.controller;
 
-import codeit.gatcha.API.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

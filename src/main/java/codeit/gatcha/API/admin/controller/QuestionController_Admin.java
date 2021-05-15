@@ -1,10 +1,10 @@
-package codeit.gatcha.API.admin.question.controller;
+package codeit.gatcha.API.admin.controller;
 
-import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
-import codeit.gatcha.API.DTO.question.outputDTO.QuestionsDTO;
-import codeit.gatcha.API.service.question.API_QuestionDeletionService;
-import codeit.gatcha.API.service.question.API_QuestionFetchService;
+import codeit.gatcha.API.client.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.client.service.question.API_QuestionDeletionService;
+import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

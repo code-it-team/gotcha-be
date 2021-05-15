@@ -1,4 +1,4 @@
-package codeit.gatcha.API.DTO.question.outputDTO;
+package codeit.gatcha.API.client.DTO.question.outputDTO;
 
 import codeit.gatcha.domain.question.entity.Question;
 import lombok.Data;

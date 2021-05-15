@@ -1,8 +1,8 @@
-package codeit.gatcha.API.service.security;
+package codeit.gatcha.API.client.service.security;
 
-import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.DTO.security.AuthenticationRequest;
-import codeit.gatcha.API.DTO.security.AuthenticationResponse;
+import codeit.gatcha.API.client.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.security.AuthenticationRequest;
+import codeit.gatcha.API.client.DTO.security.AuthenticationResponse;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;

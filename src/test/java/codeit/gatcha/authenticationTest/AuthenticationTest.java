@@ -1,10 +1,10 @@
 package codeit.gatcha.authenticationTest;
 
-import codeit.gatcha.API.DTO.APIResponse;
-import codeit.gatcha.API.controller.AuthenticationController;
-import codeit.gatcha.API.DTO.security.AuthenticationRequest;
-import codeit.gatcha.API.DTO.security.AuthenticationResponse;
-import codeit.gatcha.API.service.security.AuthenticationService;
+import codeit.gatcha.API.client.DTO.APIResponse;
+import codeit.gatcha.API.client.controller.AuthenticationController;
+import codeit.gatcha.API.client.DTO.security.AuthenticationRequest;
+import codeit.gatcha.API.client.DTO.security.AuthenticationResponse;
+import codeit.gatcha.API.client.service.security.AuthenticationService;
 import codeit.gatcha.domain.user.entity.User;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import org.junit.jupiter.api.Test;

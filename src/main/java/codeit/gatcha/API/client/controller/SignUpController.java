@@ -1,7 +1,7 @@
-package codeit.gatcha.API.controller;
+package codeit.gatcha.API.client.controller;
 
-import codeit.gatcha.API.service.security.API_SignUpService;
-import codeit.gatcha.API.DTO.APIResponse;
+import codeit.gatcha.API.client.service.security.API_SignUpService;
+import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

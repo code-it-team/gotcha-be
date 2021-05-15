@@ -1,4 +1,4 @@
-package codeit.gatcha.API.DTO;
+package codeit.gatcha.API.client.DTO;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

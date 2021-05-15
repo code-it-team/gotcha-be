@@ -1,6 +1,6 @@
-package codeit.gatcha.API.service.question;
+package codeit.gatcha.API.client.service.question;
 
-import codeit.gatcha.API.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.domain.question.service.QuestionDeletionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

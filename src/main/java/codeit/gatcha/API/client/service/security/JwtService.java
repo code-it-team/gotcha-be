@@ -1,4 +1,4 @@
-package codeit.gatcha.API.service.security;
+package codeit.gatcha.API.client.service.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

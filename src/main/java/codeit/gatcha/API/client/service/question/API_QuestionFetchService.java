@@ -1,8 +1,7 @@
-package codeit.gatcha.API.service.question;
+package codeit.gatcha.API.client.service.question;
 
-import codeit.gatcha.API.DTO.question.outputDTO.AnswerDTO;
-import codeit.gatcha.API.DTO.question.outputDTO.QuestionDTO;
-import codeit.gatcha.API.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import lombok.RequiredArgsConstructor;

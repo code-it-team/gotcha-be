@@ -1,4 +1,4 @@
-package codeit.gatcha.API.DTO.security;
+package codeit.gatcha.API.client.DTO.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

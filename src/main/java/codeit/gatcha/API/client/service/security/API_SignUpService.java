@@ -1,6 +1,6 @@
-package codeit.gatcha.API.service.security;
+package codeit.gatcha.API.client.service.security;
 
-import codeit.gatcha.API.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
 import codeit.gatcha.domain.user.entity.User;
