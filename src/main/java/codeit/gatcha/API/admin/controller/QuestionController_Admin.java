@@ -1,7 +1,7 @@
 package codeit.gatcha.API.admin.controller;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
+import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestion_DTO;
 import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
 import codeit.gatcha.API.client.service.question.API_QuestionDeletionService;
 import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
@@ -9,7 +9,6 @@ import codeit.gatcha.domain.question.service.QuestionCreationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController @RequiredArgsConstructor
@@ -19,8 +18,8 @@ public class QuestionController_Admin {
     private final API_QuestionDeletionService api_questionDeletionService;
 
     @PostMapping("/admin/createQuestion")
-    public ResponseEntity<APIResponse> createNewQuestion(@RequestBody NewQuestionWithAnswers_DTO newQuestion){
-        questionCreationService.createQuestionWithAnswers(newQuestion.getQuestionBody(), newQuestion.getAnswer());
+    public ResponseEntity<APIResponse> createNewQuestion(@RequestBody NewQuestion_DTO newQuestion){
+        questionCreationService.createQuestion(newQuestion.getQuestionBody());
         return ResponseEntity.ok(new APIResponse(OK.value(), "The Question has been created successfully"));
     }
 

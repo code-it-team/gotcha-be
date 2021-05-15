@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 public class QuestionCreationService {
     private final QuestionRepo questionRepo;
 
-    public Question createQuestionWithAnswers(String body, String answer){
-        Question question = new Question(body, answer);
+    public Question createQuestion(String body){
+        Question question = new Question(body);
         return questionRepo.save(question);
     }
 }

@@ -29,9 +29,6 @@ public class User {
 
     private boolean enabled = true;
 
-    @ManyToMany
-    private Set<Question> questions = new HashSet<>();
-
     public User(String email, String password, boolean enabled, Authority authority) {
         this.authority = authority;
         this.email = email;

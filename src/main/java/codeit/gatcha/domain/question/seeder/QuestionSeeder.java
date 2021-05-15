@@ -12,6 +12,6 @@ public class QuestionSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        questionCreationService.createQuestionWithAnswers("How do you prefer to be contacted?", "Whatsapp");
+        questionCreationService.createQuestion("How do you prefer to be contacted?");
     }
 }

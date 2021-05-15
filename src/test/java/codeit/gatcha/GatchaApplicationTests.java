@@ -28,8 +28,7 @@ class GatchaApplicationTests {
 	@Test
 	void givenQuestionWith3Answers_SuccessfullySavedToDB() {
 
-		Question question = questionCreationService.
-				createQuestionWithAnswers("question1", "answer1");
+		Question question = questionCreationService.createQuestion("question1");
 		questionRepo.deleteAll();
 		questionRepo.save(question);
 
@@ -39,7 +38,6 @@ class GatchaApplicationTests {
 
 		assertTrue(questionFromDB.isValid());
 		assertEquals("question1", questionFromDB.getBody());
-		assertEquals("answer1", questionFromDB.getAnswer());
 	}
 
 }

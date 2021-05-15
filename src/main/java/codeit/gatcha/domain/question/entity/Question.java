@@ -12,12 +12,9 @@ public class Question {
     @Column(nullable = false)
     private String body;
 
-    private String answer = "";
-
     private boolean valid = true;
 
-    public Question(String body, String answer) {
+    public Question(String body) {
         this.body = body;
-        this.answer = answer;
     }
 }

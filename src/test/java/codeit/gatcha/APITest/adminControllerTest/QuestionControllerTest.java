@@ -1,7 +1,7 @@
 package codeit.gatcha.APITest.adminControllerTest;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestionWithAnswers_DTO;
+import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestion_DTO;
 import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
 import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
 import codeit.gatcha.API.admin.controller.QuestionController_Admin;
@@ -32,8 +32,8 @@ public class QuestionControllerTest {
     void givenQuestionIsCreatedSuccessfully_CheckResponseMessage(){
         QuestionController_Admin questionController_admin = new QuestionController_Admin(questionCreationService, null, null);
 
-        NewQuestionWithAnswers_DTO question = new NewQuestionWithAnswers_DTO();
-        doReturn(null).when(questionCreationService).createQuestionWithAnswers(any(), any());
+        NewQuestion_DTO question = new NewQuestion_DTO();
+        doReturn(null).when(questionCreationService).createQuestion(any());
         ResponseEntity<APIResponse> response = questionController_admin.createNewQuestion(question);
 
         assertEquals(OK, response.getStatusCode());
@@ -46,8 +46,8 @@ public class QuestionControllerTest {
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo);
         QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null);
 
-        Question q1 = new Question("q1", "a1");
-        Question q2 = new Question("q2", "a2");
+        Question q1 = new Question("q1");
+        Question q2 = new Question("q2");
         doReturn(Arrays.asList(q1, q2)).when(questionRepo).findQuestionsByValidTrue();
 
         ResponseEntity<APIResponse> result = questionController_admin.getAllValidQuestions();
@@ -60,9 +60,7 @@ public class QuestionControllerTest {
         assertEquals(2, questions.size());
 
         assertEquals("q1", questions.get(0).getBody());
-        assertEquals("a1", questions.get(0).getAnswer());
 
         assertEquals("q2", questions.get(1).getBody());
-        assertEquals("a2", questions.get(1).getAnswer());
     }
 }

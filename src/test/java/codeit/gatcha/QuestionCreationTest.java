@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -23,10 +23,9 @@ public class QuestionCreationTest {
         QuestionCreationService questionCreationService = new QuestionCreationService(questionRepo);
 
         doAnswer(returnsFirstArg()).when(questionRepo).save(any());
-        Question question = questionCreationService.createQuestionWithAnswers("test question", "answer");
+        Question question = questionCreationService.createQuestion("test question");
 
         assertEquals("test question", question.getBody());
-        assertEquals("answer", question.getAnswer());
     }
 
 
