@@ -1,4 +1,4 @@
-package codeit.gatcha.APITest;
+package codeit.gatcha.APITest.adminControllerTest;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.admin.controller.QuestionController_Admin;
