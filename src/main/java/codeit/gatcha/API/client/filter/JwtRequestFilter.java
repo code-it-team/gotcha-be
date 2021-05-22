@@ -28,13 +28,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        final Optional<Cookie> jwtCookie = jwtService.getJwtCookie(request);
+        final String authorizationHeader = request.getHeader("Authorization");
 
         String email = null;
         String jwt = null;
 
-        if (jwtCookie.isPresent()) {
-            jwt = jwtCookie.get().getValue();
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            jwt = authorizationHeader.substring(7);
             email = jwtService.extractEmail(jwt);
         }
 
@@ -43,7 +43,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         chain.doFilter(request, response);
     }
-
 
     private void setAuthenticationInSecurityContext(HttpServletRequest request, String username, String jwt) {
         UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);

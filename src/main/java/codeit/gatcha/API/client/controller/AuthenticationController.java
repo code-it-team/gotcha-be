@@ -42,10 +42,10 @@ public class AuthenticationController {
 
     private ResponseEntity<APIResponse> verifyAndCreateAuthToken(AuthenticationRequest authRequest, HttpServletResponse response) {
         authService.verifyAuthenticationRequest(authRequest);
-        
-        createAuthTokenAndAddHttpOnlyCookie(response, authRequest);
 
-        return ResponseEntity.ok(new APIResponse(OK.value(), "Welcome!"));
+        AuthenticationResponse authToken = authService.createAuthToken(authRequest);
+
+        return ResponseEntity.ok(new APIResponse(authToken, OK.value(),"Welcome!"));
     }
 
     private void createAuthTokenAndAddHttpOnlyCookie(HttpServletResponse response, AuthenticationRequest authenticationRequest) {

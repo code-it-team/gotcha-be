@@ -73,8 +73,11 @@ public class AuthenticationTest {
 
         assertEquals(OK, result.getStatusCode());
         APIResponse body = (APIResponse) result.getBody();
+        AuthenticationResponse authResponse = (AuthenticationResponse) body.getBody();
 
         assertEquals("Welcome!", body.getMessage());
         assertEquals(OK.value(), body.getStatusCode());
+        assertEquals("testJWT", authResponse.getJwt());
+        assertEquals("email", authResponse.getEmail());
     }
 }
