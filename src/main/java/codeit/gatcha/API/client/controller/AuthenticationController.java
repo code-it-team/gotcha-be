@@ -53,7 +53,7 @@ public class AuthenticationController {
 
         Cookie cookie = new Cookie("jwt", authToken.getJwt());
 
-        cookie.setHttpOnly(true);
+        //cookie.setHttpOnly(true);
 
         response.addCookie(cookie);
     }
