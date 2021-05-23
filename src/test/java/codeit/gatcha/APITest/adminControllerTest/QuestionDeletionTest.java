@@ -28,7 +28,7 @@ public class QuestionDeletionTest {
     public void givenAnIdOfNonExistingQuestion_DetectCantBeDeleted(){
         QuestionDeletionService questionDeletionService = new QuestionDeletionService(questionRepo);
         API_QuestionDeletionService api_questionDeletionService = new API_QuestionDeletionService(questionDeletionService);
-        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, null, api_questionDeletionService);
+        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, null, api_questionDeletionService, null);
 
         doReturn(Optional.empty()).when(questionRepo).findById(22);
 
@@ -43,7 +43,7 @@ public class QuestionDeletionTest {
     public void givenAnIdOfQuestion_DeleteIt(){
         QuestionDeletionService questionDeletionService = new QuestionDeletionService(questionRepo);
         API_QuestionDeletionService api_questionDeletionService = new API_QuestionDeletionService(questionDeletionService);
-        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, null, api_questionDeletionService);
+        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, null, api_questionDeletionService, null);
 
         Question q = new Question();
         doReturn(Optional.of(q)).when(questionRepo).findById(23);

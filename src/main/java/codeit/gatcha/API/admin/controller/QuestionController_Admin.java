@@ -2,9 +2,11 @@ package codeit.gatcha.API.admin.controller;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestion_DTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
 import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
 import codeit.gatcha.API.client.service.question.API_QuestionDeletionService;
 import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
+import codeit.gatcha.API.client.service.question.API_QuestionUpdateService;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ public class QuestionController_Admin {
     private final QuestionCreationService questionCreationService;
     private final API_QuestionFetchService api_questionFetchService;
     private final API_QuestionDeletionService api_questionDeletionService;
+    private final API_QuestionUpdateService api_questionUpdateService;
 
     @PostMapping("/admin/createQuestion")
     public ResponseEntity<APIResponse> createNewQuestion(@RequestBody NewQuestion_DTO newQuestion){
@@ -33,5 +36,10 @@ public class QuestionController_Admin {
     @DeleteMapping("/admin/question/delete")
     public ResponseEntity<APIResponse> invalidateQuestionByIdOrThrow(@RequestBody int id) {
         return api_questionDeletionService.invalidateQuestionById(id);
+    }
+
+    @PutMapping("/admin/question/update")
+    public ResponseEntity<APIResponse> updateQuestionById(@RequestBody QuestionDTO questionDTO){
+        return api_questionUpdateService.updateQuestionById(questionDTO);
     }
 }

@@ -30,7 +30,7 @@ public class QuestionControllerTest {
 
     @Test
     void givenQuestionIsCreatedSuccessfully_CheckResponseMessage(){
-        QuestionController_Admin questionController_admin = new QuestionController_Admin(questionCreationService, null, null);
+        QuestionController_Admin questionController_admin = new QuestionController_Admin(questionCreationService, null, null, null);
 
         NewQuestion_DTO question = new NewQuestion_DTO();
         doReturn(null).when(questionCreationService).createQuestion(any());
@@ -44,7 +44,7 @@ public class QuestionControllerTest {
     @Test
     void given_2_QuestionsInDB_GetTheirDTOs(){
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo);
-        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null);
+        QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null, null);
 
         Question q1 = new Question("q1");
         Question q2 = new Question("q2");
