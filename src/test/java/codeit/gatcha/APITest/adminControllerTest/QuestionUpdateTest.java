@@ -7,7 +7,6 @@ import codeit.gatcha.API.client.service.question.API_QuestionUpdateService;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionUpdateService;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
