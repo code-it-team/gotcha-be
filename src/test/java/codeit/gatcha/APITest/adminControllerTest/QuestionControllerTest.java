@@ -46,8 +46,8 @@ public class QuestionControllerTest {
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo);
         QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null, null);
 
-        Question q1 = new Question("q1");
-        Question q2 = new Question("q2");
+        Question q1 = new Question(1, "q1");
+        Question q2 = new Question(2, "q2");
         doReturn(Arrays.asList(q1, q2)).when(questionRepo).findQuestionsByValidTrue();
 
         ResponseEntity<APIResponse> result = questionController_admin.getAllValidQuestions();
@@ -60,7 +60,9 @@ public class QuestionControllerTest {
         assertEquals(2, questions.size());
 
         assertEquals("q1", questions.get(0).getBody());
+        assertEquals(1, questions.get(0).getId());
 
         assertEquals("q2", questions.get(1).getBody());
+        assertEquals(2, questions.get(1).getId());
     }
 }

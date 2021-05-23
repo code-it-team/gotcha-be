@@ -14,6 +14,11 @@ public class Question {
 
     private boolean valid = true;
 
+    public Question(Integer id, String body) {
+        this.id = id;
+        this.body = body;
+    }
+
     public Question(String body) {
         this.body = body;
     }

@@ -11,6 +11,6 @@ public class QuestionDTO {
 
     public QuestionDTO(Question question){
         this.body = question.getBody();
-        this.id = null;
+        this.id = question.getId();
     }
 }
