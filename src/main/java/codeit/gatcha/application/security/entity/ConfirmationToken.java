@@ -1,6 +1,6 @@
 package codeit.gatcha.application.security.entity;
 
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,9 +23,9 @@ public class ConfirmationToken {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private User user;
+    private GatchaUser user;
 
-    public ConfirmationToken(User user) {
+    public ConfirmationToken(GatchaUser user) {
         this.user = user;
         createdDate = new Date();
         confirmationToken = UUID.randomUUID().toString();

@@ -4,7 +4,7 @@ import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.service.security.API_SignUpService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
@@ -64,7 +64,7 @@ public class SignupTest {
         doReturn(new Authority()).when(authorityRepo).findByRole("ROLE_USER");
 
         SignUpDTO signUpDTO = new SignUpDTO("user@test", "pass");
-        doReturn(User.builder().email("user@test").build()).
+        doReturn(GatchaUser.builder().email("user@test").build()).
                 when(userRepo).
                 save(Mockito.any());
 

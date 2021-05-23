@@ -4,7 +4,7 @@ import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.service.security.API_SignUpService;
 import codeit.gatcha.application.security.entity.ConfirmationToken;
 import codeit.gatcha.API.client.service.security.ConfirmationTokenService;
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
 import codeit.gatcha.application.security.repo.ConfirmationTokenRepo;
@@ -50,7 +50,7 @@ public class AccountActivationTest {
 
     @Test
     void givenAConfirmationToken_activateUser(){
-        User user = new User();
+        GatchaUser user = new GatchaUser();
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
         doReturn(false).when(confirmationTokenService).confirmationTokenDoesntExist("tokenTest");

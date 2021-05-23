@@ -1,6 +1,6 @@
 package codeit.gatcha.application.security;
 
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ public class CustomUserDetails implements UserDetails {
     private final List<GrantedAuthority> authorities;
 
 
-    public CustomUserDetails(User user) {
+    public CustomUserDetails(GatchaUser user) {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.enabled = user.isEnabled();

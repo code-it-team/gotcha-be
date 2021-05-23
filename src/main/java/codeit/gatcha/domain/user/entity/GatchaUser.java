@@ -1,19 +1,16 @@
 package codeit.gatcha.domain.user.entity;
 
 import codeit.gatcha.application.security.entity.Authority;
-import codeit.gatcha.domain.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data @NoArgsConstructor @Builder @AllArgsConstructor
 @Entity
-public class User {
+public class GatchaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
@@ -29,7 +26,7 @@ public class User {
 
     private boolean enabled = true;
 
-    public User(String email, String password, boolean enabled, Authority authority) {
+    public GatchaUser(String email, String password, boolean enabled, Authority authority) {
         this.authority = authority;
         this.email = email;
         this.password = password;

@@ -5,7 +5,7 @@ import codeit.gatcha.API.client.controller.AuthenticationController;
 import codeit.gatcha.API.client.DTO.security.AuthenticationRequest;
 import codeit.gatcha.API.client.DTO.security.AuthenticationResponse;
 import codeit.gatcha.API.client.service.security.AuthenticationService;
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ public class AuthenticationTest {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest("email", "pass");
         AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
 
-        doReturn(Optional.of(new User())).when(userRepo).findByEmail("email");
+        doReturn(Optional.of(new GatchaUser())).when(userRepo).findByEmail("email");
         doThrow(new AuthenticationException("test") {}).when(authenticationService).verifyAuthenticationRequest(authenticationRequest);
         ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, null);
 
@@ -67,7 +67,7 @@ public class AuthenticationTest {
 
         AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
 
-        doReturn(Optional.of(new User())).when(userRepo).findByEmail("email");
+        doReturn(Optional.of(new GatchaUser())).when(userRepo).findByEmail("email");
         doReturn(authenticationResponse).when(authenticationService).createAuthToken(authenticationRequest);
         ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, mockHttpServletResponse);
 

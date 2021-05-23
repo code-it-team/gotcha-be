@@ -4,7 +4,7 @@ import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.security.AuthenticationRequest;
 import codeit.gatcha.API.client.DTO.security.AuthenticationResponse;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class AuthenticationService {
     public AuthenticationResponse createAuthToken(AuthenticationRequest authenticationRequest) {
         UserDetails userDetails =  customUserDetailService.loadUserByUsername(authenticationRequest.getEmail());
 
-        User user = userRepo.
+        GatchaUser user = userRepo.
                 findByEmail(userDetails.getUsername()).
                 orElseThrow(() -> new RuntimeException(""));
 

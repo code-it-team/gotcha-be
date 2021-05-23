@@ -3,7 +3,7 @@ package codeit.gatcha.API.client.service.security;
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
 import codeit.gatcha.domain.user.service.signUp.UserService;
@@ -29,7 +29,7 @@ public class API_SignUpService {
     }
 
     private ResponseEntity<APIResponse> createNewUserAndSendConfirmationEmail(SignUpDTO signUpDTO) {
-        User user = signUpService.createNewUser(signUpDTO);
+        GatchaUser user = signUpService.createNewUser(signUpDTO);
         confirmationService.createAndSendConfirmationTokenToUser(user);
         return ResponseEntity.
                 status(CREATED).

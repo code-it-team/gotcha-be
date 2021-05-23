@@ -1,6 +1,6 @@
 package codeit.gatcha.application.security.entity;
 
-import codeit.gatcha.domain.user.entity.User;
+import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,12 +15,12 @@ public class Authority {
     private Integer id;
 
     @OneToMany
-    private Set<User> users;
+    private Set<GatchaUser> users;
 
     @Column(unique = true)
     private String role;
 
-    public Authority(Set<User> users, String role) {
+    public Authority(Set<GatchaUser> users, String role) {
         this.users = users;
         this.role = role;
     }
