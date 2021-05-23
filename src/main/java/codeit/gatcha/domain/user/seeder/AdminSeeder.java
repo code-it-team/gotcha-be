@@ -24,6 +24,19 @@ public class AdminSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args){
+        if (dbNotAlreadyPopulated())
+            addAdmins();
+        else
+            log.info("DB Already Populated");
+    }
+
+    private boolean dbNotAlreadyPopulated() {
+        return userRepo.
+                findByEmail("jalil.jarjanazy@gmail.com").
+                isEmpty();
+    }
+
+    private void addAdmins() {
         log.info("Adding new users.....");
 
         Authority adminAuthority = new Authority(new HashSet<>(), "ROLE_ADMIN");
