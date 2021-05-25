@@ -8,7 +8,7 @@ import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
-import codeit.gatcha.application.security.entity.Authority;
+import codeit.gatcha.application.security.entity.GatchaAuthority;
 import codeit.gatcha.application.security.repo.AuthorityRepo;
 import codeit.gatcha.domain.user.service.signUp.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ public class SignupTest {
     void givenAValidSignUpDTO_SuccessfullyAddNewUser(){
         doReturn(false).when(userService).emailIsUsed("user@test");
 
-        doReturn(new Authority()).when(authorityRepo).findByRole("ROLE_USER");
+        doReturn(new GatchaAuthority()).when(authorityRepo).findByRole("ROLE_USER");
 
         SignUpDTO signUpDTO = new SignUpDTO("user@test", "pass");
         doReturn(GatchaUser.builder().email("user@test").build()).

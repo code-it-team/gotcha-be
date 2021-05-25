@@ -1,6 +1,6 @@
 package codeit.gatcha.domain.user.entity;
 
-import codeit.gatcha.application.security.entity.Authority;
+import codeit.gatcha.application.security.entity.GatchaAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class GatchaUser {
     private Integer id;
 
     @ManyToOne
-    private Authority authority;
+    private GatchaAuthority authority;
 
     @Email
     @Column(unique = true)
@@ -27,7 +27,7 @@ public class GatchaUser {
 
     private boolean enabled = true;
 
-    public GatchaUser(String email, String password, boolean enabled, Authority authority) {
+    public GatchaUser(String email, String password, boolean enabled, GatchaAuthority authority) {
         this.authority = authority;
         this.email = email;
         this.password = password;
