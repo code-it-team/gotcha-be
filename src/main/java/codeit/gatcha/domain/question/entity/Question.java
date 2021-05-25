@@ -4,6 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity @Data @NoArgsConstructor @Builder @AllArgsConstructor
+@Table(name = "GATCHA_QUESTION")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

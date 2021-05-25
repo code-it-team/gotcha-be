@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity @Data @NoArgsConstructor
+@Entity @Data @NoArgsConstructor @Table(name = "GATCHA_CONFIRMATION_TOKEN")
 public class ConfirmationToken {
 
     @Id

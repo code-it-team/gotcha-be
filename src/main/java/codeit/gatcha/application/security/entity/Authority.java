@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data @NoArgsConstructor
-@Entity
+@Entity @Table(name = "GATCHA_AUTHORITY")
 public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

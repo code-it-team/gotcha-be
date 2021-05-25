@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity @NoArgsConstructor @AllArgsConstructor @Getter
+@Entity @NoArgsConstructor @AllArgsConstructor @Getter @Table(name = "GATCHA_ANSWER")
 public class Answer {
     @Id
     private Integer id;

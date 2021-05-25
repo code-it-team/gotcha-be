@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 
 @Data @NoArgsConstructor @Builder @AllArgsConstructor
 @Entity
+@Table(name = "GATCHA_USER")
 public class GatchaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
