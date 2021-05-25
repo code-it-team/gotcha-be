@@ -42,11 +42,12 @@ public class AdminSeeder implements CommandLineRunner {
         Authority adminAuthority = new Authority(new HashSet<>(), "ROLE_ADMIN");
         Authority userAuthority = new Authority(new HashSet<>(), "ROLE_USER");
 
+        authorityRepo.saveAll(Arrays.asList(adminAuthority, userAuthority));
+
         GatchaUser jalil = new GatchaUser("jalil.jarjanazy@gmail.com", "testPass", true, adminAuthority);
         GatchaUser hazem = new GatchaUser("hazem.alabiad@gmail.com", "testPass", true, adminAuthority);
         GatchaUser testUser = new GatchaUser("test.test@gmail.com", "testPass", true, userAuthority);
 
-        authorityRepo.saveAll(Arrays.asList(adminAuthority, userAuthority));
         userRepo.saveAll(Arrays.asList(jalil, hazem, testUser));
     }
 }
