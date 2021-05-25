@@ -24,7 +24,7 @@ public class SignUpService {
                 builder().
                 email(signUpDTO.getEmail()).
                 password(signUpDTO.getPassword()).
-                authority(authorityRepo.findByRole("ROLE_USER")).
+                authority(authorityRepo.findByRole("ROLE_USER").get()).
                 enabled(false).
                 build();
     }

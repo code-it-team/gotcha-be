@@ -31,9 +31,8 @@ public class AdminSeeder implements CommandLineRunner {
     }
 
     private boolean dbNotAlreadyPopulated() {
-        return userRepo.
-                findByEmail("jalil.jarjanazy@gmail.com").
-                isEmpty();
+        return userRepo.findByEmail("jalil.jarjanazy@gmail.com").isEmpty() &&
+                authorityRepo.findByRole("ROLE_ADMIN").isEmpty();
     }
 
     private void addAdmins() {
