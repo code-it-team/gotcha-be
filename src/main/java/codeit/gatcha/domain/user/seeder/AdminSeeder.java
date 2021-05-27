@@ -42,7 +42,7 @@ public class AdminSeeder implements CommandLineRunner {
 
     private void addUserIfNotFoundOrGet(String email, String password, GatchaAuthority authority){
         userRepo.
-                findByEmail("jalil.jarjanazy@gmail.com").
+                findByEmail(email).
                 orElseGet(() -> userRepo.save(new GatchaUser(email, password, true, authority)));
     }
 
