@@ -43,7 +43,7 @@ public class QuestionControllerTest {
 
     @Test
     void given_2_QuestionsInDB_GetTheirDTOs(){
-        API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo);
+        API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, null, null);
         QuestionController_Admin questionController_admin = new QuestionController_Admin(null, api_questionFetchService, null, null);
 
         Question q1 = new Question(1, "q1");
