@@ -13,9 +13,10 @@ public class WebConfig{
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.
-                        addMapping("/**").
-                        allowedOrigins("*").
-                        allowCredentials(true);
+                        addMapping("/**")
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
+                        .allowedOrigins("*");;
             }
         };
     }
