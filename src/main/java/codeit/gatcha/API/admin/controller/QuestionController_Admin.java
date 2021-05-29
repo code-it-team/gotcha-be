@@ -2,8 +2,8 @@ package codeit.gatcha.API.admin.controller;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestion_DTO;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionsDTO;
 import codeit.gatcha.API.client.service.question.API_QuestionDeletionService;
 import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import codeit.gatcha.API.client.service.question.API_QuestionUpdateService;
@@ -28,7 +28,7 @@ public class QuestionController_Admin {
 
     @GetMapping("/admin/questions")
     public ResponseEntity<APIResponse> getAllValidQuestions(){
-        QuestionsDTO questionsDTO = api_questionFetchService.getAllValidQuestions_DTO();
+        Admin_QuestionsDTO questionsDTO = api_questionFetchService.getAllValidQuestions_DTO();
         APIResponse apiResponse = new APIResponse(questionsDTO, OK.value(), "success");
         return ResponseEntity.ok(apiResponse);
     }
@@ -39,7 +39,7 @@ public class QuestionController_Admin {
     }
 
     @PutMapping("/admin/question/update")
-    public ResponseEntity<APIResponse> updateQuestionById(@RequestBody QuestionDTO questionDTO){
+    public ResponseEntity<APIResponse> updateQuestionById(@RequestBody Admin_QuestionDTO questionDTO){
         return api_questionUpdateService.updateQuestionById(questionDTO);
     }
 }

@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor @Data
-public class QuestionsDTO {
-    private final List<QuestionDTO> questions;
+public class Admin_QuestionsDTO {
+    private final List<Admin_QuestionDTO> questions;
 }

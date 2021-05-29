@@ -18,6 +18,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -61,7 +64,7 @@ public class SignupTest {
     void givenAValidSignUpDTO_SuccessfullyAddNewUser(){
         doReturn(false).when(userService).emailIsUsed("user@test");
 
-        doReturn(new GatchaAuthority()).when(authorityRepo).findByRole("ROLE_USER");
+        doReturn(Optional.of(new GatchaAuthority())).when(authorityRepo).findByRole("ROLE_USER");
 
         SignUpDTO signUpDTO = new SignUpDTO("user@test", "pass");
         doReturn(GatchaUser.builder().email("user@test").build()).

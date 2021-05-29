@@ -2,7 +2,7 @@ package codeit.gatcha.APITest.adminControllerTest;
 
 import codeit.gatcha.API.admin.controller.QuestionController_Admin;
 import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionDTO;
 import codeit.gatcha.API.client.service.question.API_QuestionUpdateService;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
@@ -37,7 +37,7 @@ public class QuestionUpdateTest {
 
     @Test
     public void givenAQuestionIdToUpdate_DetectQuestionNotFound(){
-        QuestionDTO questionDTO = new QuestionDTO("newBody", 1);
+        Admin_QuestionDTO questionDTO = new Admin_QuestionDTO("newBody", 1);
 
         doReturn(Optional.empty()).when(questionRepo).findById(1);
 
@@ -49,7 +49,7 @@ public class QuestionUpdateTest {
 
     @Test
     public void givenAQuestionIdToUpdate_UpdateQuestion(){
-        QuestionDTO questionDTO = new QuestionDTO("newBody", 11);
+        Admin_QuestionDTO questionDTO = new Admin_QuestionDTO("newBody", 11);
         Question question = new Question();
 
         doReturn(Optional.of(question)).when(questionRepo).findById(11);

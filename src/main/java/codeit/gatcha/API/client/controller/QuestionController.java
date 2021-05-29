@@ -1,7 +1,7 @@
 package codeit.gatcha.API.client.controller;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionsDTO;
 import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class QuestionController {
 
     @GetMapping("/questions")
     public ResponseEntity<APIResponse> getAllValidQuestions(){
-        QuestionsDTO questionsDTO = api_questionFetchService.getAllValidQuestions_DTO();
+        Admin_QuestionsDTO questionsDTO = api_questionFetchService.getAllValidQuestions_DTO();
         APIResponse apiResponse = new APIResponse(questionsDTO, OK.value(), "success");
         return ResponseEntity.ok(apiResponse);
     }

@@ -1,7 +1,7 @@
 package codeit.gatcha.API.client.service.question;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionDTO;
 import codeit.gatcha.domain.question.service.QuestionUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class API_QuestionUpdateService {
     private final QuestionUpdateService questionUpdateService;
 
-    public ResponseEntity<APIResponse> updateQuestionById(QuestionDTO questionDTO) {
+    public ResponseEntity<APIResponse> updateQuestionById(Admin_QuestionDTO questionDTO) {
         try{
             questionUpdateService.updateQuestion(questionDTO.getId(), questionDTO.getBody());
             return ResponseEntity.ok(new APIResponse(OK.value(), "Question has been successfully updated"));

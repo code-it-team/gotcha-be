@@ -1,7 +1,7 @@
 package codeit.gatcha.API.client.service.question;
 
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionsDTO;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 public class API_QuestionFetchService {
     private final QuestionRepo questionRepo;
 
-    public QuestionsDTO getAllValidQuestions_DTO() {
+    public Admin_QuestionsDTO getAllValidQuestions_DTO() {
         List<Question> questions = questionRepo.findQuestionsByValidTrue();
-        List<QuestionDTO> questionDTOS = questions.
+        List<Admin_QuestionDTO> questionDTOS = questions.
                 stream().
-                map(QuestionDTO::new).
+                map(Admin_QuestionDTO::new).
                 collect(Collectors.toList());
-        return new QuestionsDTO(questionDTOS);
+        return new Admin_QuestionsDTO(questionDTOS);
     }
 
 }

@@ -2,8 +2,8 @@ package codeit.gatcha.APITest.adminControllerTest;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.question.inputDTO.NewQuestion_DTO;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionDTO;
-import codeit.gatcha.API.client.DTO.question.outputDTO.QuestionsDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionDTO;
+import codeit.gatcha.API.client.DTO.question.outputDTO.Admin_QuestionsDTO;
 import codeit.gatcha.API.admin.controller.QuestionController_Admin;
 import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import codeit.gatcha.domain.question.entity.Question;
@@ -51,11 +51,11 @@ public class QuestionControllerTest {
         doReturn(Arrays.asList(q1, q2)).when(questionRepo).findQuestionsByValidTrue();
 
         ResponseEntity<APIResponse> result = questionController_admin.getAllValidQuestions();
-        QuestionsDTO questionsDTO = (QuestionsDTO) result.getBody().getBody();
+        Admin_QuestionsDTO questionsDTO = (Admin_QuestionsDTO) result.getBody().getBody();
 
         assertEquals(OK.value(), result.getStatusCodeValue());
         assertEquals(OK, result.getStatusCode());
-        List<QuestionDTO> questions = questionsDTO.getQuestions();
+        List<Admin_QuestionDTO> questions = questionsDTO.getQuestions();
 
         assertEquals(2, questions.size());
 
