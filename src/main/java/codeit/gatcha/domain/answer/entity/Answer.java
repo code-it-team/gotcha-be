@@ -1,17 +1,16 @@
 package codeit.gatcha.domain.answer.entity;
 
+import codeit.gatcha.API.client.DTO.question.inputDTO.QuestionAnswer_DTO;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.user.entity.GatchaUser;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @NoArgsConstructor @AllArgsConstructor @Getter @Table(name = "GATCHA_ANSWER") @Builder
+@Entity @NoArgsConstructor @AllArgsConstructor @Getter @Table(name = "GATCHA_ANSWER") @Builder @Setter
 public class Answer {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     private String body;
@@ -21,4 +20,10 @@ public class Answer {
 
     @ManyToOne
     GatchaUser user;
+
+    public Answer (QuestionAnswer_DTO questionAnswer_dto, Question question, GatchaUser user){
+        this.body = questionAnswer_dto.getAnswer();
+        this.question = question;
+        this.user = user;
+    }
 }

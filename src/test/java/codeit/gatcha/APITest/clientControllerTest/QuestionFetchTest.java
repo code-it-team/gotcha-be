@@ -24,7 +24,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.springframework.http.HttpStatus.OK;
 
 @ExtendWith(MockitoExtension.class)
-public class QuestionControllerTest {
+public class QuestionFetchTest {
     @Mock
     QuestionRepo questionRepo;
     @Mock
@@ -35,7 +35,7 @@ public class QuestionControllerTest {
     @Test
     void given_1_QuestionWithAnswerInDB_GetDTO(){
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, answerRepo, userSessionService);
-        QuestionController questionController = new QuestionController(api_questionFetchService);
+        QuestionController questionController = new QuestionController(api_questionFetchService, null);
 
         Question q1 = new Question("q1");
         doReturn(Collections.singletonList(q1)).when(questionRepo).findQuestionsByValidTrue();
@@ -57,7 +57,7 @@ public class QuestionControllerTest {
     @Test
     void given_1_QuestionWithNoAnswerInDB_GetDTO(){
         API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, answerRepo, userSessionService);
-        QuestionController questionController = new QuestionController(api_questionFetchService);
+        QuestionController questionController = new QuestionController(api_questionFetchService, null);
 
         Question q1 = new Question("q2");
         doReturn(Collections.singletonList(q1)).when(questionRepo).findQuestionsByValidTrue();
