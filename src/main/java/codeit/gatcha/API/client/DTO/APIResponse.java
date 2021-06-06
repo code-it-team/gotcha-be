@@ -2,8 +2,9 @@ package codeit.gatcha.API.client.DTO;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-@RequiredArgsConstructor @Getter
+@RequiredArgsConstructor @Getter @ToString
 public class APIResponse {
     private final Object body;
     private final int statusCode;

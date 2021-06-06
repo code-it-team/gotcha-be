@@ -51,13 +51,4 @@ public class JwtService {
         final String email = extractEmail(token);
         return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-
-    public Optional<Cookie> getJwtCookie(HttpServletRequest request) {
-        if (request.getCookies() == null )
-            return Optional.empty();
-
-        else return Arrays.stream(request.getCookies()).
-                filter(c -> c.getName().equals("jwt")).
-                findAny();
-    }
 }

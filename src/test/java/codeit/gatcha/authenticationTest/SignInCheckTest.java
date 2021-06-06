@@ -2,77 +2,47 @@ package codeit.gatcha.authenticationTest;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.controller.AuthenticationController;
+import codeit.gatcha.API.client.filter.JwtRequestFilter;
 import codeit.gatcha.API.client.service.security.AuthenticationService;
 import codeit.gatcha.API.client.service.security.JwtService;
 import codeit.gatcha.domain.user.repo.UserRepo;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.http.HttpStatus.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SignInCheckTest {
-    @Mock
-    UserRepo userRepo;
     @Mock
     MockHttpServletRequest mockHttpServletRequest;
     @Mock
     JwtService jwtService;
 
     @Test
-    public void givenAuthenticationRequest_ForSignInCheck_DetectNoCookieFound(){
-        AuthenticationService authenticationService = new AuthenticationService(null, null, null, new JwtService());
-        AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
+    public void givenJWT_DetectNotValid() throws Exception{
+        JwtRequestFilter jwtRequestFilter = new JwtRequestFilter(null,jwtService);
+        doReturn("Bearer jwt").when(mockHttpServletRequest).getHeader("Authorization");
+        doThrow(new ExpiredJwtException(null ,null, null)).when(jwtService).extractEmail("jwt");
 
-        doReturn(null).when(mockHttpServletRequest).getCookies();
+        MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
 
-        ResponseEntity<APIResponse> result =  authController.userIsSignedIn("email", mockHttpServletRequest);
+        jwtRequestFilter.doFilterInternal(mockHttpServletRequest, mockHttpServletResponse, null);
 
-        assertEquals(UNAUTHORIZED, result.getStatusCode());
-        assertEquals(UNAUTHORIZED.value(), result.getBody().getStatusCode());
-        assertEquals("No Cookie is provided", result.getBody().getMessage());
-    }
+        assertEquals(BAD_REQUEST.value(), mockHttpServletResponse.getStatus());
+        assertEquals("JWT is invalid", mockHttpServletResponse.getContentAsString());
 
-    @Test
-    public void givenAuthenticationRequest_ForSignInCheck_DetectEmailNotMatchingJWT(){
-        AuthenticationService authenticationService = new AuthenticationService(null, null, null, jwtService);
-        AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
-
-        Cookie cookie = new Cookie("jwt", "testToken");
-
-        doReturn(Optional.of(cookie)).when(jwtService).getJwtCookie(mockHttpServletRequest);
-        doReturn("email1").when(jwtService).extractEmail("testToken");
-
-        ResponseEntity<APIResponse> result =  authController.userIsSignedIn("email2", mockHttpServletRequest);
-
-        assertEquals(UNAUTHORIZED, result.getStatusCode());
-        assertEquals(UNAUTHORIZED.value(), result.getBody().getStatusCode());
-        assertEquals("The current loggedIn email isn't the one sent", result.getBody().getMessage());
-    }
-
-    @Test
-    public void givenAuthenticationRequest_ForSignInCheck_DetectUserIsSignedInAndValid(){
-        AuthenticationService authenticationService = new AuthenticationService(null, null, null, jwtService);
-        AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
-
-        Cookie cookie = new Cookie("jwt", "testToken");
-
-        doReturn(Optional.of(cookie)).when(jwtService).getJwtCookie(mockHttpServletRequest);
-        doReturn("email1").when(jwtService).extractEmail("testToken");
-
-        ResponseEntity<APIResponse> result =  authController.userIsSignedIn("email1", mockHttpServletRequest);
-
-        assertEquals(OK, result.getStatusCode());
-        assertEquals(OK.value(), result.getBody().getStatusCode());
-        assertEquals("The user is loggedIn", result.getBody().getMessage());
     }
 
 

@@ -35,27 +35,12 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/isSignedIn")
-    public ResponseEntity<APIResponse> userIsSignedIn(@RequestParam String email, HttpServletRequest httpServletRequest) {
-        return authService.userIsSignedIn(email, httpServletRequest);
-    }
-
     private ResponseEntity<APIResponse> verifyAndCreateAuthToken(AuthenticationRequest authRequest, HttpServletResponse response) {
         authService.verifyAuthenticationRequest(authRequest);
 
         AuthenticationResponse authToken = authService.createAuthToken(authRequest);
 
         return ResponseEntity.ok(new APIResponse(authToken, OK.value(),"Welcome!"));
-    }
-
-    private void createAuthTokenAndAddHttpOnlyCookie(HttpServletResponse response, AuthenticationRequest authenticationRequest) {
-        AuthenticationResponse authToken = authService.createAuthToken(authenticationRequest);
-
-        Cookie cookie = new Cookie("jwt", authToken.getJwt());
-
-        //cookie.setHttpOnly(true);
-
-        response.addCookie(cookie);
     }
 
     private String getWrongEmailMessage(AuthenticationRequest authenticationRequest) {
@@ -65,6 +50,4 @@ public class AuthenticationController {
     private boolean emailIsntFound(AuthenticationRequest authenticationRequest) {
         return userRepo.findByEmail(authenticationRequest.getEmail()).isEmpty();
     }
-
-
 }

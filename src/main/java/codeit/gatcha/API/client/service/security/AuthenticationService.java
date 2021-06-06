@@ -42,27 +42,4 @@ public class AuthenticationService {
         authenticationManager.authenticate(authentication);
     }
 
-    public ResponseEntity<APIResponse> userIsSignedIn(String email, HttpServletRequest httpServletRequest) {
-        Optional<Cookie> jwtCookie = jwtService.getJwtCookie(httpServletRequest);
-
-        return jwtCookie.
-                map(c -> checkEmailValidity(c, email)).
-                orElse(createUnauthorizedResponseWithMessage("No Cookie is provided"));
-    }
-
-    private ResponseEntity<APIResponse> createUnauthorizedResponseWithMessage(String message) {
-        return ResponseEntity.
-                status(UNAUTHORIZED).
-                body(new APIResponse(UNAUTHORIZED.value(), message));
-    }
-
-    private ResponseEntity<APIResponse> checkEmailValidity(Cookie cookie, String email) {
-        String emailFromJWT = jwtService.extractEmail(cookie.getValue());
-
-        if (!emailFromJWT.equals(email))
-            return createUnauthorizedResponseWithMessage("The current loggedIn email isn't the one sent");
-
-        else
-            return ResponseEntity.ok(new APIResponse(OK.value(), "The user is loggedIn"));
-    }
 }

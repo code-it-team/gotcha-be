@@ -2,6 +2,7 @@ package codeit.gatcha.API.client.filter;
 
 import codeit.gatcha.application.security.service.CustomUserDetailService;
 import codeit.gatcha.API.client.service.security.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,16 +19,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 @RequiredArgsConstructor
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-
     private final CustomUserDetailService customUserDetailsService;
     private final JwtService jwtService;
 
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        try{
+            extractAndSetCredentials(request);
+            chain.doFilter(request, response);
+        }catch (ExpiredJwtException e){
+            logger.info("JWT is invalid");
+            response.getWriter().write("JWT is invalid");
+            response.setStatus(BAD_REQUEST.value());
+        }
+    }
+
+    private void extractAndSetCredentials(HttpServletRequest request) {
         final String authorizationHeader = request.getHeader("Authorization");
 
         String email = null;
@@ -40,8 +52,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null)
             setAuthenticationInSecurityContext(request, email, jwt);
-
-        chain.doFilter(request, response);
     }
 
     private void setAuthenticationInSecurityContext(HttpServletRequest request, String username, String jwt) {
