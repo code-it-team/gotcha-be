@@ -3,6 +3,7 @@ package codeit.gatcha.API.client.filter;
 import codeit.gatcha.application.security.service.CustomUserDetailService;
 import codeit.gatcha.API.client.service.security.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +33,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         try{
             extractAndSetCredentials(request);
             chain.doFilter(request, response);
-        }catch (ExpiredJwtException e){
-            String jwt = String.format("JWT %s is invalid", request.getHeader("Authorization"));
+        }catch (ExpiredJwtException | MalformedJwtException e ){
+            String jwt = String.format("JWT %s is invalid", request.getHeader("Authorization").substring(7));
             logger.info(jwt);
             response.getWriter().write(jwt);
             response.setStatus(BAD_REQUEST.value());

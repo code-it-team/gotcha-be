@@ -41,7 +41,7 @@ public class SignInCheckTest {
         jwtRequestFilter.doFilterInternal(mockHttpServletRequest, mockHttpServletResponse, null);
 
         assertEquals(BAD_REQUEST.value(), mockHttpServletResponse.getStatus());
-        assertEquals("JWT Bearer jwt is invalid", mockHttpServletResponse.getContentAsString());
+        assertEquals("JWT jwt is invalid", mockHttpServletResponse.getContentAsString());
 
     }
 
