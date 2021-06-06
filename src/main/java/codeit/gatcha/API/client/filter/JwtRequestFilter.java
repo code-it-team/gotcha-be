@@ -33,8 +33,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             extractAndSetCredentials(request);
             chain.doFilter(request, response);
         }catch (ExpiredJwtException e){
-            logger.info("JWT is invalid");
-            response.getWriter().write("JWT is invalid");
+            String jwt = String.format("JWT %s is invalid", request.getHeader("Authorization"));
+            logger.info(jwt);
+            response.getWriter().write(jwt);
             response.setStatus(BAD_REQUEST.value());
         }
     }
