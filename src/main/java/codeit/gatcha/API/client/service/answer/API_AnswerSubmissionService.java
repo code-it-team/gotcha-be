@@ -22,7 +22,7 @@ public class API_AnswerSubmissionService {
                     getQuestionAnswers().
                     forEach(answerSubmissionService::checkAndSubmitAnswer);
 
-            return ResponseEntity.ok(new APIResponse(null, OK.value(), "success"));
+            return ResponseEntity.ok(new APIResponse(null, OK.value(), "Answer was submitted successfully"));
         }catch (EntityNotFoundException e){
             return ResponseEntity.badRequest().body(new APIResponse(null, BAD_REQUEST.value(), e.getMessage()));
         }
