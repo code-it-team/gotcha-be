@@ -1,4 +1,4 @@
-package codeit.gatcha.API;
+package codeit.gatcha.API.errorHandler;
 
 
 import codeit.gatcha.API.client.DTO.APIResponse;

@@ -8,10 +8,8 @@ import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -22,7 +20,7 @@ public class AuthenticationController {
     private final UserRepo userRepo;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> checkEmailAndVerify(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response){
+    public ResponseEntity<?> checkEmailAndVerify(@RequestBody @Validated AuthenticationRequest authenticationRequest, HttpServletResponse response){
         try{
             if (emailIsntFound(authenticationRequest))
                 return ResponseEntity.

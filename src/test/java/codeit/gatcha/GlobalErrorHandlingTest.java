@@ -1,7 +1,7 @@
 package codeit.gatcha;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.GlobalErrorHandling;
+import codeit.gatcha.API.errorHandler.GlobalErrorHandling;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
