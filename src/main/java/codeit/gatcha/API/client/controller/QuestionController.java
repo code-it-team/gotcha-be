@@ -7,6 +7,7 @@ import codeit.gatcha.API.client.service.answer.API_AnswerSubmissionService;
 import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions/submitAnswer")
-    public ResponseEntity<APIResponse> submitAnswers(@RequestBody QuestionAnswers_DTO questionAnswers_dto){
+    public ResponseEntity<APIResponse> submitAnswers(@RequestBody @Validated QuestionAnswers_DTO questionAnswers_dto){
         return api_answerSubmissionService.submitQuestionsAnswers(questionAnswers_dto);
     }
 }
