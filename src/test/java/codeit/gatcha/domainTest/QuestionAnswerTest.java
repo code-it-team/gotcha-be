@@ -25,24 +25,21 @@ public class QuestionAnswerTest {
     QuestionRepo questionRepo;
     @Mock
     AnswerRepo answerRepo;
-    @Mock
-    UserSessionService userSessionService;
 
     @Test
     public void givenUser_DetectHasAnsweredAllQuestions(){
-        AnswerFetchService answerFetchService = new AnswerFetchService(answerRepo, questionRepo, userSessionService);
+        AnswerFetchService answerFetchService = new AnswerFetchService(answerRepo, questionRepo);
 
         GatchaUser user = new GatchaUser();
         Question q1 = new Question("q1");
         Question q2 = new Question("q2");
 
         doReturn(Arrays.asList(q1, q2)).when(questionRepo).findQuestionsByValidTrue();
-        doReturn(user).when(userSessionService).getCurrentLoggedInUser();
 
         doReturn(Optional.of(new Answer())).when(answerRepo).findByQuestionAndUser(q1, user);
         doReturn(Optional.of(new Answer())).when(answerRepo).findByQuestionAndUser(q2, user);
 
-        boolean result = answerFetchService.currentUserHasntAnsweredAllQuestions();
+        boolean result = answerFetchService.currentUserHasntAnsweredAllQuestions(user);
         assertFalse(result);
     }
 

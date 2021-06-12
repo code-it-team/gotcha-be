@@ -17,12 +17,12 @@ public class Publication {
     @OneToOne
     private GatchaUser gatchaUser;
     private Date publicationDate;
-    private boolean isPublished;
+    private boolean published;
 
 
-    public Publication(GatchaUser gatchaUser, Date publicationDate, boolean isPublished) {
+    public Publication(GatchaUser gatchaUser, Date publicationDate, boolean published) {
         this.gatchaUser = gatchaUser;
         this.publicationDate = publicationDate;
-        this.isPublished = isPublished;
+        this.published = published;
     }
 }

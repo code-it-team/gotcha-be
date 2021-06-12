@@ -86,7 +86,7 @@ public class AnswerSubmissionTest {
         assertEquals("a1", answer.getBody());
         assertEquals(OK, result.getStatusCode());
         assertEquals(OK.value(), result.getBody().getStatusCode());
-        assertEquals("success", result.getBody().getMessage());
+        assertEquals("Answer was submitted successfully", result.getBody().getMessage());
     }
 
     @Test

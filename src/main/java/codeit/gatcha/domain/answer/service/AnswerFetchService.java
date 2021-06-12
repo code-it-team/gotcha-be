@@ -15,11 +15,8 @@ import java.util.Optional;
 public class AnswerFetchService {
     private final AnswerRepo answerRepo;
     private final QuestionRepo questionRepo;
-    private final UserSessionService userSessionService;
 
-    public boolean currentUserHasntAnsweredAllQuestions() {
-        GatchaUser loggedInUser = userSessionService.getCurrentLoggedInUser();
-
+    public boolean currentUserHasntAnsweredAllQuestions(GatchaUser loggedInUser) {
         return questionRepo.
                 findQuestionsByValidTrue().
                 stream().
