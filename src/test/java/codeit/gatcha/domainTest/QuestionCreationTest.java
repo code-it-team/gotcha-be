@@ -1,4 +1,4 @@
-package codeit.gatcha;
+package codeit.gatcha.domainTest;
 
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
