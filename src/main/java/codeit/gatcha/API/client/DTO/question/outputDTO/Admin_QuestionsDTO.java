@@ -1,10 +1,12 @@
 package codeit.gatcha.API.client.DTO.question.outputDTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 
-@RequiredArgsConstructor @Data
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Admin_QuestionsDTO {
-    private final List<Admin_QuestionDTO> questions;
+    private List<Admin_QuestionDTO> questions;
 }

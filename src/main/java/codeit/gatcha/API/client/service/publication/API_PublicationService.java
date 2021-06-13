@@ -1,6 +1,7 @@
 package codeit.gatcha.API.client.service.publication;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
+import codeit.gatcha.API.client.DTO.Publication.PublicationLinkDTO;
 import codeit.gatcha.application.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.service.AnswerFetchService;
 import codeit.gatcha.domain.publication.entity.Publication;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
@@ -36,13 +38,24 @@ public class API_PublicationService {
     }
 
     private ResponseEntity<APIResponse> createNewPublication(GatchaUser user) {
-        publicationRepo.save(new Publication(user, new Date(), true));
-        return ResponseEntity.ok(new APIResponse(OK.value(), "The answers have been published"));
+        Publication publication = publicationRepo.save(new Publication(user, new Date(), true));
+        return ResponseEntity.ok(new APIResponse(publication, OK.value(), "The answers have been published"));
     }
 
     private ResponseEntity<APIResponse> generateBadRequest(String body) {
         return ResponseEntity.
                 badRequest().
                 body(new APIResponse(BAD_REQUEST.value(), body));
+    }
+
+    public ResponseEntity<APIResponse> getPublicationLink() {
+        GatchaUser user = userSessionService.getCurrentLoggedInUser();
+        Optional<Publication> optional = publicationRepo.findByGatchaUserAndPublishedIsTrue(user);
+
+        if (optional.isEmpty())
+            return generateBadRequest("This user hasn't published answers yet");
+        else
+            return ResponseEntity.ok
+                    (new APIResponse(new PublicationLinkDTO(optional.get()), OK.value(), "success"));
     }
 }
