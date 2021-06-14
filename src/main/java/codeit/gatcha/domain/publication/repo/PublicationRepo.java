@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface PublicationRepo extends CrudRepository<Publication, Integer> {
     Optional<Publication> findByGatchaUserAndPublishedIsTrue(GatchaUser user);
+    Optional<Publication> findByLinkUniqueString(String link);
 }

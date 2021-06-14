@@ -2,30 +2,33 @@ package codeit.gatcha.APITest.clientControllerTest;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.Publication.PublicationLinkDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedAnswerDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedAnswersDTO;
 import codeit.gatcha.API.client.controller.PublicationController;
 import codeit.gatcha.API.client.service.publication.API_PublicationService;
 import codeit.gatcha.application.user.service.UserSessionService;
+import codeit.gatcha.domain.answer.entity.Answer;
+import codeit.gatcha.domain.answer.repo.AnswerRepo;
 import codeit.gatcha.domain.answer.service.AnswerFetchService;
 import codeit.gatcha.domain.publication.entity.Publication;
 import codeit.gatcha.domain.publication.repo.PublicationRepo;
+import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.user.entity.GatchaUser;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Mockito.*;
-import static org.postgresql.hostchooser.HostRequirement.any;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -37,13 +40,15 @@ public class PublicationTest {
     UserSessionService userSessionService;
     @Mock
     PublicationRepo publicationRepo;
+    @Mock
+    AnswerRepo answerRepo;
 
     PublicationController publicationController;
     API_PublicationService api_publicationService;
 
     @BeforeEach
     public void setUp(){
-        api_publicationService = new API_PublicationService(answerFetchService, publicationRepo, userSessionService);
+        api_publicationService = new API_PublicationService(answerFetchService, publicationRepo, userSessionService, answerRepo);
         publicationController = new PublicationController(api_publicationService);
     }
 
@@ -83,13 +88,10 @@ public class PublicationTest {
         doReturn(Optional.empty()).when(publicationRepo).findByGatchaUserAndPublishedIsTrue(user);
         when(publicationRepo.save(any())).then(returnsFirstArg());
         ResponseEntity<APIResponse> result =  publicationController.publishAnswers();
-        Publication publication = (Publication) result.getBody().getBody();
 
         assertEquals(OK, result.getStatusCode());
         assertEquals(OK.value() ,result.getBody().getStatusCode());
         assertEquals("The answers have been published", result.getBody().getMessage());
-        assertEquals(user, publication.getGatchaUser());
-        assertNotNull(publication.getLinkUniqueString());
     }
 
     @Test
@@ -114,6 +116,48 @@ public class PublicationTest {
         assertEquals("success", result.getBody().getMessage());
         assertEquals("asd", publicationLinkDTO.getLink());
         assertFalse(publicationLinkDTO.getPublicationDate().isEmpty());
+    }
+
+    @Test
+    public void givenPublishLinkIsInvalid_WhenAnonymousUserAsksForAnswers_RETURN400(){
+        doReturn(Optional.empty()).when(publicationRepo).findByLinkUniqueString("unique");
+
+        ResponseEntity<APIResponse> result = publicationController.getPublishedAnswersByLink("unique");
+
+        assertEquals(BAD_REQUEST, result.getStatusCode());
+        assertEquals(BAD_REQUEST.value(), result.getBody().getStatusCode());
+        assertEquals("No such link exists", result.getBody().getMessage());
+    }
+
+    @Test
+    public void givenPublishLinkIsValid_WhenAnonymousUserAsksForAnswers_GetThem(){
+        Question q1 = new Question("q1");
+        Question q2 = new Question("q2");
+
+        Answer a1 = new Answer(1, "a1", q1, null);
+        Answer a2 = new Answer(2, "a2", q2, null);
+        List<Answer> answers = Arrays.asList(a1, a2);
+
+        GatchaUser user = new GatchaUser();
+        Publication publication = Publication.builder().gatchaUser(user).build();
+
+        doReturn(Optional.of(publication)).when(publicationRepo).findByLinkUniqueString("unique");
+        doReturn(answers).when(answerRepo).findByUser(user);
+        ResponseEntity<APIResponse> result = publicationController.getPublishedAnswersByLink("unique");
+        PublishedAnswersDTO publishedAnswersDTO = (PublishedAnswersDTO) result.getBody().getBody();
+
+        assertEquals(OK, result.getStatusCode());
+        assertEquals(OK.value(), result.getBody().getStatusCode());
+        assertEquals("success", result.getBody().getMessage());
+        assertEquals(2, publishedAnswersDTO.getPublishedAnswerDTOs().size());
+
+        PublishedAnswerDTO publishedAnswerDTO1 = publishedAnswersDTO.getPublishedAnswerDTOs().get(0);
+        PublishedAnswerDTO publishedAnswerDTO2 = publishedAnswersDTO.getPublishedAnswerDTOs().get(1);
+
+        assertEquals("q1", publishedAnswerDTO1.getQuestion());
+        assertEquals("a1", publishedAnswerDTO1.getAnswer());
+        assertEquals("q2", publishedAnswerDTO2.getQuestion());
+        assertEquals("a2", publishedAnswerDTO2.getAnswer());
     }
 
 }

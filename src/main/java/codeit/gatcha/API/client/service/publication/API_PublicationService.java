@@ -2,7 +2,10 @@ package codeit.gatcha.API.client.service.publication;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.Publication.PublicationLinkDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedAnswerDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedAnswersDTO;
 import codeit.gatcha.application.user.service.UserSessionService;
+import codeit.gatcha.domain.answer.repo.AnswerRepo;
 import codeit.gatcha.domain.answer.service.AnswerFetchService;
 import codeit.gatcha.domain.publication.entity.Publication;
 import codeit.gatcha.domain.publication.repo.PublicationRepo;
@@ -14,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
@@ -24,6 +29,7 @@ public class API_PublicationService {
     private final AnswerFetchService answerFetchService;
     private final PublicationRepo publicationRepo;
     private final UserSessionService userSessionService;
+    private final AnswerRepo answerRepo;
 
     public ResponseEntity<APIResponse> publishAnswers() {
         GatchaUser user = userSessionService.getCurrentLoggedInUser();
@@ -38,8 +44,8 @@ public class API_PublicationService {
     }
 
     private ResponseEntity<APIResponse> createNewPublication(GatchaUser user) {
-        Publication publication = publicationRepo.save(new Publication(user, new Date(), true));
-        return ResponseEntity.ok(new APIResponse(publication, OK.value(), "The answers have been published"));
+        publicationRepo.save(new Publication(user, new Date(), true));
+        return ResponseEntity.ok(new APIResponse(OK.value(), "The answers have been published"));
     }
 
     private ResponseEntity<APIResponse> generateBadRequest(String body) {
@@ -57,5 +63,25 @@ public class API_PublicationService {
         else
             return ResponseEntity.ok
                     (new APIResponse(new PublicationLinkDTO(optional.get()), OK.value(), "success"));
+    }
+
+    public ResponseEntity<APIResponse> getPublishedAnswersByLink(String link) {
+        Optional<Publication> publication = publicationRepo.findByLinkUniqueString(link);
+
+        if (publication.isEmpty())
+            return generateBadRequest("No such link exists");
+        else{
+            List<PublishedAnswerDTO> publishedAnswerDTOS = getUserAnswersAndCreatePublishedAnswersDTO(publication);
+            return ResponseEntity.ok(new APIResponse(new PublishedAnswersDTO(publishedAnswerDTOS), OK.value(), "success"));
+        }
+
+    }
+
+    private List<PublishedAnswerDTO> getUserAnswersAndCreatePublishedAnswersDTO(Optional<Publication> publication) {
+        return answerRepo.
+                findByUser(publication.get().getGatchaUser()).
+                stream().
+                map(PublishedAnswerDTO::new).
+                collect(Collectors.toList());
     }
 }

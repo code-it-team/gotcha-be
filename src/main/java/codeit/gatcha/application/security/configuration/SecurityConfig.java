@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/h2-console/**",
                     "/signup",
                     "/confirm-account",
-                    "/isSignedIn"};
+                    "/isSignedIn",
+                    "/answers/published/**"};
 
     private final String[] ADMIN_ALLOWED_URLS = {
             "/admin/**", "/actuator/health"
