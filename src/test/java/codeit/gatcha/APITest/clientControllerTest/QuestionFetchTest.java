@@ -8,6 +8,8 @@ import codeit.gatcha.API.client.service.question.API_QuestionFetchService;
 import codeit.gatcha.application.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.answer.repo.AnswerRepo;
+import codeit.gatcha.domain.publication.entity.Publication;
+import codeit.gatcha.domain.publication.repo.PublicationRepo;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -31,10 +35,12 @@ public class QuestionFetchTest {
     AnswerRepo answerRepo;
     @Mock
     UserSessionService userSessionService;
+    @Mock
+    PublicationRepo publicationRepo;
 
     @Test
     void given_1_QuestionWithAnswerInDB_GetDTO(){
-        API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, answerRepo, userSessionService);
+        API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, answerRepo, userSessionService, publicationRepo);
         QuestionController questionController = new QuestionController(api_questionFetchService, null);
 
         Question q1 = new Question("q1");
@@ -42,6 +48,8 @@ public class QuestionFetchTest {
 
         Answer answer = Answer.builder().body("a1").build();
         doReturn(Optional.of(answer)).when(answerRepo).findByQuestionAndUser(q1, null);
+
+        doReturn(Optional.of(new Publication())).when(publicationRepo).findByGatchaUserAndPublishedIsTrue(any());
 
         ResponseEntity<APIResponse> result = questionController.getAllValidQuestionsWithUserAnswers();
         User_QuestionsDTO questionsDTO = (User_QuestionsDTO) result.getBody().getBody();
@@ -52,11 +60,12 @@ public class QuestionFetchTest {
         assertEquals(1, questions.size());
         assertEquals("q1", questions.get(0).getBody());
         assertEquals("a1", questions.get(0).getAnswer());
+        assertTrue(questionsDTO.isPublished());
     }
 
     @Test
     void given_1_QuestionWithNoAnswerInDB_GetDTO(){
-        API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, answerRepo, userSessionService);
+        API_QuestionFetchService api_questionFetchService = new API_QuestionFetchService(questionRepo, answerRepo, userSessionService, publicationRepo);
         QuestionController questionController = new QuestionController(api_questionFetchService, null);
 
         Question q1 = new Question("q2");

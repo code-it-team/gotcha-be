@@ -9,4 +9,5 @@ import java.util.List;
 @Getter @NoArgsConstructor @AllArgsConstructor
 public class User_QuestionsDTO {
     private List<User_QuestionDTO> questions;
+    private boolean published;
 }
