@@ -2,8 +2,8 @@ package codeit.gatcha.APITest.clientControllerTest;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.Publication.PublicationLinkDTO;
-import codeit.gatcha.API.client.DTO.Publication.PublishedAnswerDTO;
-import codeit.gatcha.API.client.DTO.Publication.PublishedAnswersDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedQuestionDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedQuestionsDTO;
 import codeit.gatcha.API.client.controller.PublicationController;
 import codeit.gatcha.API.client.service.publication.API_PublicationService;
 import codeit.gatcha.application.user.service.UserSessionService;
@@ -144,20 +144,20 @@ public class PublicationTest {
         doReturn(Optional.of(publication)).when(publicationRepo).findByLinkUniqueString("unique");
         doReturn(answers).when(answerRepo).findByUser(user);
         ResponseEntity<APIResponse> result = publicationController.getPublishedAnswersByLink("unique");
-        PublishedAnswersDTO publishedAnswersDTO = (PublishedAnswersDTO) result.getBody().getBody();
+        PublishedQuestionsDTO publishedQuestionsDTO = (PublishedQuestionsDTO) result.getBody().getBody();
 
         assertEquals(OK, result.getStatusCode());
         assertEquals(OK.value(), result.getBody().getStatusCode());
         assertEquals("success", result.getBody().getMessage());
-        assertEquals(2, publishedAnswersDTO.getPublishedAnswers().size());
+        assertEquals(2, publishedQuestionsDTO.getQuestions().size());
 
-        PublishedAnswerDTO publishedAnswerDTO1 = publishedAnswersDTO.getPublishedAnswers().get(0);
-        PublishedAnswerDTO publishedAnswerDTO2 = publishedAnswersDTO.getPublishedAnswers().get(1);
+        PublishedQuestionDTO publishedQuestionDTO1 = publishedQuestionsDTO.getQuestions().get(0);
+        PublishedQuestionDTO publishedQuestionDTO2 = publishedQuestionsDTO.getQuestions().get(1);
 
-        assertEquals("q1", publishedAnswerDTO1.getQuestion());
-        assertEquals("a1", publishedAnswerDTO1.getAnswer());
-        assertEquals("q2", publishedAnswerDTO2.getQuestion());
-        assertEquals("a2", publishedAnswerDTO2.getAnswer());
+        assertEquals("q1", publishedQuestionDTO1.getBody());
+        assertEquals("a1", publishedQuestionDTO1.getAnswer());
+        assertEquals("q2", publishedQuestionDTO2.getBody());
+        assertEquals("a2", publishedQuestionDTO2.getAnswer());
     }
 
 }

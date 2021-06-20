@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor @Getter
-public class PublishedAnswerDTO {
-    private String question;
+public class PublishedQuestionDTO {
+    private String body;
     private String answer;
 
-    public PublishedAnswerDTO(Answer answer) {
-        this.question = answer.getQuestion().getBody();
+    public PublishedQuestionDTO(Answer answer) {
+        this.body = answer.getQuestion().getBody();
         this.answer = answer.getBody();
     }
 }

@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor @Getter
-public class PublishedAnswersDTO {
-    List<PublishedAnswerDTO> publishedAnswers;
+public class PublishedQuestionsDTO {
+    List<PublishedQuestionDTO> questions;
 }

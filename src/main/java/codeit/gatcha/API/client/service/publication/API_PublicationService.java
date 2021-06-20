@@ -2,17 +2,15 @@ package codeit.gatcha.API.client.service.publication;
 
 import codeit.gatcha.API.client.DTO.APIResponse;
 import codeit.gatcha.API.client.DTO.Publication.PublicationLinkDTO;
-import codeit.gatcha.API.client.DTO.Publication.PublishedAnswerDTO;
-import codeit.gatcha.API.client.DTO.Publication.PublishedAnswersDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedQuestionDTO;
+import codeit.gatcha.API.client.DTO.Publication.PublishedQuestionsDTO;
 import codeit.gatcha.application.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.repo.AnswerRepo;
 import codeit.gatcha.domain.answer.service.AnswerFetchService;
 import codeit.gatcha.domain.publication.entity.Publication;
 import codeit.gatcha.domain.publication.repo.PublicationRepo;
-import codeit.gatcha.domain.publication.service.PublicationService;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -71,17 +69,17 @@ public class API_PublicationService {
         if (publication.isEmpty())
             return generateBadRequest("No such link exists");
         else{
-            List<PublishedAnswerDTO> publishedAnswerDTOS = getUserAnswersAndCreatePublishedAnswersDTO(publication);
-            return ResponseEntity.ok(new APIResponse(new PublishedAnswersDTO(publishedAnswerDTOS), OK.value(), "success"));
+            List<PublishedQuestionDTO> publishedQuestionDTOS = getUserAnswersAndCreatePublishedAnswersDTO(publication);
+            return ResponseEntity.ok(new APIResponse(new PublishedQuestionsDTO(publishedQuestionDTOS), OK.value(), "success"));
         }
 
     }
 
-    private List<PublishedAnswerDTO> getUserAnswersAndCreatePublishedAnswersDTO(Optional<Publication> publication) {
+    private List<PublishedQuestionDTO> getUserAnswersAndCreatePublishedAnswersDTO(Optional<Publication> publication) {
         return answerRepo.
                 findByUser(publication.get().getGatchaUser()).
                 stream().
-                map(PublishedAnswerDTO::new).
+                map(PublishedQuestionDTO::new).
                 collect(Collectors.toList());
     }
 }
