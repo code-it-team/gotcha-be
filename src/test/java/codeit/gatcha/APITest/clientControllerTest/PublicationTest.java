@@ -149,10 +149,10 @@ public class PublicationTest {
         assertEquals(OK, result.getStatusCode());
         assertEquals(OK.value(), result.getBody().getStatusCode());
         assertEquals("success", result.getBody().getMessage());
-        assertEquals(2, publishedAnswersDTO.getPublishedAnswerDTOs().size());
+        assertEquals(2, publishedAnswersDTO.getPublishedAnswers().size());
 
-        PublishedAnswerDTO publishedAnswerDTO1 = publishedAnswersDTO.getPublishedAnswerDTOs().get(0);
-        PublishedAnswerDTO publishedAnswerDTO2 = publishedAnswersDTO.getPublishedAnswerDTOs().get(1);
+        PublishedAnswerDTO publishedAnswerDTO1 = publishedAnswersDTO.getPublishedAnswers().get(0);
+        PublishedAnswerDTO publishedAnswerDTO2 = publishedAnswersDTO.getPublishedAnswers().get(1);
 
         assertEquals("q1", publishedAnswerDTO1.getQuestion());
         assertEquals("a1", publishedAnswerDTO1.getAnswer());

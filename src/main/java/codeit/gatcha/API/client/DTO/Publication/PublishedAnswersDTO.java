@@ -8,5 +8,5 @@ import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor @Getter
 public class PublishedAnswersDTO {
-    List<PublishedAnswerDTO> publishedAnswerDTOs;
+    List<PublishedAnswerDTO> publishedAnswers;
 }
