@@ -1,4 +1,4 @@
-package codeit.gatcha.api.client.controller;
+package codeit.gatcha.api.security.controller;
 
 import codeit.gatcha.api.security.service.API_SignUpService;
 import codeit.gatcha.api.client.DTO.APIResponse;
