@@ -1,15 +1,15 @@
 package codeit.gatcha.userTest;
 
-import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.service.security.API_SignUpService;
+import codeit.gatcha.api.client.DTO.APIResponse;
+import codeit.gatcha.api.client.service.security.API_SignUpService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
-import codeit.gatcha.application.security.entity.GatchaAuthority;
-import codeit.gatcha.application.security.repo.AuthorityRepo;
+import codeit.gatcha.api.security.entity.GatchaAuthority;
+import codeit.gatcha.api.security.repo.AuthorityRepo;
 import codeit.gatcha.domain.user.service.signUp.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

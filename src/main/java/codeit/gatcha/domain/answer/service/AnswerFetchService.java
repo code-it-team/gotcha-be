@@ -1,14 +1,11 @@
 package codeit.gatcha.domain.answer.service;
 
-import codeit.gatcha.application.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.repo.AnswerRepo;
-import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.repo.QuestionRepo;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service @RequiredArgsConstructor

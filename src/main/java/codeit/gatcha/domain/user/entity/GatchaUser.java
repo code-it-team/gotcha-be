@@ -1,6 +1,6 @@
 package codeit.gatcha.domain.user.entity;
 
-import codeit.gatcha.application.security.entity.GatchaAuthority;
+import codeit.gatcha.api.security.entity.GatchaAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

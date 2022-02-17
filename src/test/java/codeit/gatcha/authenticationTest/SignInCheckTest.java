@@ -1,23 +1,15 @@
 package codeit.gatcha.authenticationTest;
 
-import codeit.gatcha.API.client.DTO.APIResponse;
-import codeit.gatcha.API.client.controller.AuthenticationController;
-import codeit.gatcha.API.client.filter.JwtRequestFilter;
-import codeit.gatcha.API.client.service.security.AuthenticationService;
-import codeit.gatcha.API.client.service.security.JwtService;
-import codeit.gatcha.domain.user.repo.UserRepo;
+import codeit.gatcha.api.client.filter.JwtRequestFilter;
+import codeit.gatcha.api.client.service.security.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;

@@ -1,6 +1,5 @@
 package codeit.gatcha.domainTest;
 
-import codeit.gatcha.application.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.answer.repo.AnswerRepo;
 import codeit.gatcha.domain.answer.service.AnswerFetchService;

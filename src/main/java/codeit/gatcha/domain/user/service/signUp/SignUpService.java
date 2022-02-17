@@ -1,7 +1,7 @@
 package codeit.gatcha.domain.user.service.signUp;
 
-import codeit.gatcha.application.security.repo.AuthorityRepo;
-import codeit.gatcha.application.security.repo.ConfirmationTokenRepo;
+import codeit.gatcha.api.security.repo.AuthorityRepo;
+import codeit.gatcha.api.security.repo.ConfirmationTokenRepo;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
