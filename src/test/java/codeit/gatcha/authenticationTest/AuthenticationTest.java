@@ -1,10 +1,10 @@
 package codeit.gatcha.authenticationTest;
 
 import codeit.gatcha.api.client.DTO.APIResponse;
-import codeit.gatcha.api.client.controller.AuthenticationController;
+import codeit.gatcha.api.security.controller.AuthenticationController;
 import codeit.gatcha.api.client.DTO.security.AuthenticationRequest;
 import codeit.gatcha.api.client.DTO.security.AuthenticationResponse;
-import codeit.gatcha.api.client.service.security.AuthenticationService;
+import codeit.gatcha.api.security.service.AuthenticationApiService;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationTest {
     @Mock
-    AuthenticationService authenticationService;
+    AuthenticationApiService authenticationApiService;
     @Mock
     UserRepo userRepo;
     @Mock
@@ -33,10 +33,10 @@ public class AuthenticationTest {
     @Test
     public void givenAnAuthenticationRequest_DetectWrongPassword(){
         AuthenticationRequest authenticationRequest = new AuthenticationRequest("email", "pass");
-        AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
+        AuthenticationController authController = new AuthenticationController(authenticationApiService, userRepo);
 
         doReturn(Optional.of(new GatchaUser())).when(userRepo).findByEmail("email");
-        doThrow(new AuthenticationException("test") {}).when(authenticationService).verifyAuthenticationRequest(authenticationRequest);
+        doThrow(new AuthenticationException("test") {}).when(authenticationApiService).verifyAuthenticationRequest(authenticationRequest);
         ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, null);
 
         assertEquals(UNAUTHORIZED, result.getStatusCode());
@@ -49,7 +49,7 @@ public class AuthenticationTest {
     @Test
     public void givenAnAuthenticationRequest_DetectEmailNotFound(){
         AuthenticationRequest authenticationRequest = new AuthenticationRequest("email@email.com", "pass");
-        AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
+        AuthenticationController authController = new AuthenticationController(authenticationApiService, userRepo);
 
         doReturn(Optional.empty()).when(userRepo).findByEmail("email@email.com");
         ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, null);
@@ -65,10 +65,10 @@ public class AuthenticationTest {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest("email", "pass");
         AuthenticationResponse authenticationResponse = new AuthenticationResponse("testJWT", "email");
 
-        AuthenticationController authController = new AuthenticationController(authenticationService, userRepo);
+        AuthenticationController authController = new AuthenticationController(authenticationApiService, userRepo);
 
         doReturn(Optional.of(new GatchaUser())).when(userRepo).findByEmail("email");
-        doReturn(authenticationResponse).when(authenticationService).createAuthToken(authenticationRequest);
+        doReturn(authenticationResponse).when(authenticationApiService).createAuthToken(authenticationRequest);
         ResponseEntity<?> result = authController.checkEmailAndVerify(authenticationRequest, mockHttpServletResponse);
 
         assertEquals(OK, result.getStatusCode());

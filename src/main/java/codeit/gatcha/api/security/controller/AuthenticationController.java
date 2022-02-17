@@ -1,9 +1,9 @@
-package codeit.gatcha.api.client.controller;
+package codeit.gatcha.api.security.controller;
 
 import codeit.gatcha.api.client.DTO.APIResponse;
 import codeit.gatcha.api.client.DTO.security.AuthenticationRequest;
 import codeit.gatcha.api.client.DTO.security.AuthenticationResponse;
-import codeit.gatcha.api.client.service.security.AuthenticationService;
+import codeit.gatcha.api.security.service.AuthenticationApiService;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController @RequiredArgsConstructor
 public class AuthenticationController {
-    private final AuthenticationService authService;
+    private final AuthenticationApiService authService;
     private final UserRepo userRepo;
 
     @PostMapping("/signin")

@@ -1,8 +1,7 @@
-package codeit.gatcha.api.client.service.security;
+package codeit.gatcha.api.security.service;
 
 import codeit.gatcha.api.client.DTO.security.AuthenticationRequest;
 import codeit.gatcha.api.client.DTO.security.AuthenticationResponse;
-import codeit.gatcha.api.security.service.CustomUserDetailService;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationApiService {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailService customUserDetailService;
     private final UserRepo userRepo;

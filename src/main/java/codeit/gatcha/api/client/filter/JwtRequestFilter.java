@@ -1,7 +1,7 @@
 package codeit.gatcha.api.client.filter;
 
 import codeit.gatcha.api.security.service.CustomUserDetailService;
-import codeit.gatcha.api.client.service.security.JwtService;
+import codeit.gatcha.api.security.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;

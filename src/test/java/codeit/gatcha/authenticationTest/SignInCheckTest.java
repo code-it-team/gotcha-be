@@ -1,7 +1,7 @@
 package codeit.gatcha.authenticationTest;
 
 import codeit.gatcha.api.client.filter.JwtRequestFilter;
-import codeit.gatcha.api.client.service.security.JwtService;
+import codeit.gatcha.api.security.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
