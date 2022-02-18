@@ -1,6 +1,6 @@
 package codeit.gatcha.domain.answer.service;
 
-import codeit.gatcha.api.client.DTO.question.inputDTO.QuestionAnswer_DTO;
+import codeit.gatcha.api.DTO.question.inputDTO.QuestionAnswer_DTO;
 import codeit.gatcha.common.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.entity.Answer;
 import codeit.gatcha.domain.answer.repo.AnswerRepo;

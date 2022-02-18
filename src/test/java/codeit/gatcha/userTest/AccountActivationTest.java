@@ -1,11 +1,11 @@
 package codeit.gatcha.userTest;
 
-import codeit.gatcha.api.client.DTO.APIResponse;
-import codeit.gatcha.api.security.service.API_SignUpService;
+import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.entity.ConfirmationToken;
+import codeit.gatcha.api.security.service.API_SignUpService;
 import codeit.gatcha.api.security.service.ConfirmationTokenService;
 import codeit.gatcha.domain.user.entity.GatchaUser;
-import codeit.gatcha.domain.user.repo.UserRepo;
+import codeit.gatcha.domain.user.repo.IUserRepo;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
 import codeit.gatcha.api.security.repo.ConfirmationTokenRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import static org.springframework.http.HttpStatus.OK;
 @ExtendWith(MockitoExtension.class)
 public class AccountActivationTest {
     @Mock
-    UserRepo userRepo;
+    IUserRepo IUserRepo;
     @Mock
     ConfirmationTokenRepo confirmationTokenRepo;
     @Mock
@@ -35,7 +35,7 @@ public class AccountActivationTest {
 
     @BeforeEach
     void setUp(){
-        signUpService = new SignUpService(userRepo, null, confirmationTokenRepo);
+        signUpService = new SignUpService(IUserRepo, null, confirmationTokenRepo);
         api_signUpService = new API_SignUpService(signUpService, null, null, confirmationTokenService);
     }
 
@@ -54,7 +54,7 @@ public class AccountActivationTest {
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
         doReturn(false).when(confirmationTokenService).confirmationTokenDoesntExist("tokenTest");
-        doReturn(null).when(userRepo).save(user);
+        doReturn(null).when(IUserRepo).save(user);
         doReturn(Optional.of(confirmationToken)).when(confirmationTokenRepo).findByConfirmationToken("tokenTest");
 
         ResponseEntity<APIResponse> result = api_signUpService.confirmUserAccount("tokenTest");

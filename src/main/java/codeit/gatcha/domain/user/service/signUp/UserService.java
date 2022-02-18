@@ -1,14 +1,14 @@
 package codeit.gatcha.domain.user.service.signUp;
 
-import codeit.gatcha.domain.user.repo.UserRepo;
+import codeit.gatcha.domain.user.repo.IUserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service @RequiredArgsConstructor
 public class UserService {
-    private final UserRepo userRepo;
+    private final IUserRepo IUserRepo;
 
     public boolean emailIsUsed(String email){
-        return userRepo.findByEmail(email).isPresent();
+        return IUserRepo.findByEmail(email).isPresent();
     }
 }

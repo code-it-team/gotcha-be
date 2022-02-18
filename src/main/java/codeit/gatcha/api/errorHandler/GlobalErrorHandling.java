@@ -1,7 +1,7 @@
 package codeit.gatcha.api.errorHandler;
 
 
-import codeit.gatcha.api.client.DTO.APIResponse;
+import codeit.gatcha.api.response.APIResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

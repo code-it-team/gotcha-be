@@ -1,15 +1,15 @@
 package codeit.gatcha.userTest;
 
-import codeit.gatcha.api.client.DTO.APIResponse;
+import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.service.API_SignUpService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
+import codeit.gatcha.domain.user.entity.Authority;
 import codeit.gatcha.domain.user.entity.GatchaUser;
-import codeit.gatcha.domain.user.repo.UserRepo;
+import codeit.gatcha.domain.user.repo.IAuthorityRepo;
+import codeit.gatcha.domain.user.repo.IUserRepo;
 import codeit.gatcha.domain.user.service.signUp.EmailConfirmationService;
 import codeit.gatcha.domain.user.service.signUp.SignUpService;
-import codeit.gatcha.api.security.entity.GatchaAuthority;
-import codeit.gatcha.api.security.repo.AuthorityRepo;
 import codeit.gatcha.domain.user.service.signUp.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,9 +30,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 @ExtendWith(MockitoExtension.class)
 public class SignupTest {
     @Mock
-    private UserRepo userRepo;
+    private IUserRepo IUserRepo;
     @Mock
-    private AuthorityRepo authorityRepo;
+    private IAuthorityRepo authorityRepo;
     @Mock
     EmailConfirmationService emailConfirmationService;
     @Mock
@@ -42,7 +42,7 @@ public class SignupTest {
     SignUpService signUpService;
     @BeforeEach
     void setUp(){
-        signUpService = new SignUpService(userRepo, authorityRepo, null);
+        signUpService = new SignUpService(IUserRepo, authorityRepo, null);
         api_signUpService = new API_SignUpService(signUpService, emailConfirmationService, userService, null);
     }
 
@@ -64,11 +64,11 @@ public class SignupTest {
     void givenAValidSignUpDTO_SuccessfullyAddNewUser(){
         doReturn(false).when(userService).emailIsUsed("user@test");
 
-        doReturn(Optional.of(new GatchaAuthority())).when(authorityRepo).findByRole("ROLE_USER");
+        doReturn(Optional.of(new Authority())).when(authorityRepo).findByRole("ROLE_USER");
 
         SignUpDTO signUpDTO = new SignUpDTO("user@test", "pass");
         doReturn(GatchaUser.builder().email("user@test").build()).
-                when(userRepo).
+                when(IUserRepo).
                 save(Mockito.any());
 
         doNothing().when(emailConfirmationService).createAndSendConfirmationTokenToUser(Mockito.any());

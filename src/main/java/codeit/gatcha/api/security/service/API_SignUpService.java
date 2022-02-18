@@ -1,6 +1,6 @@
 package codeit.gatcha.api.security.service;
 
-import codeit.gatcha.api.client.DTO.APIResponse;
+import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;
 import codeit.gatcha.domain.user.DTO.UserDTO;
 import codeit.gatcha.domain.user.entity.GatchaUser;
@@ -10,7 +10,6 @@ import codeit.gatcha.domain.user.service.signUp.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

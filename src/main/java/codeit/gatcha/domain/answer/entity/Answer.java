@@ -1,6 +1,6 @@
 package codeit.gatcha.domain.answer.entity;
 
-import codeit.gatcha.api.client.DTO.question.inputDTO.QuestionAnswer_DTO;
+import codeit.gatcha.api.DTO.question.inputDTO.QuestionAnswer_DTO;
 import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.*;

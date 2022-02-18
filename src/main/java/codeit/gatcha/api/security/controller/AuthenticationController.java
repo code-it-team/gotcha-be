@@ -1,51 +1,41 @@
 package codeit.gatcha.api.security.controller;
 
-import codeit.gatcha.api.client.DTO.APIResponse;
-import codeit.gatcha.api.client.DTO.security.AuthenticationRequest;
-import codeit.gatcha.api.client.DTO.security.AuthenticationResponse;
+import codeit.gatcha.api.response.APIResponse;
+import codeit.gatcha.api.security.dto.AuthenticationRequest;
+import codeit.gatcha.api.security.dto.SignOutRequestDto;
 import codeit.gatcha.api.security.service.AuthenticationApiService;
-import codeit.gatcha.domain.user.repo.UserRepo;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletResponse;
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@RestController @RequiredArgsConstructor
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+@RequiredArgsConstructor
+@Getter
 public class AuthenticationController {
-    private final AuthenticationApiService authService;
-    private final UserRepo userRepo;
+    private final AuthenticationApiService authenticationApiService;
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> checkEmailAndVerify(@RequestBody @Validated AuthenticationRequest authenticationRequest, HttpServletResponse response){
-        try{
-            if (emailIsntFound(authenticationRequest))
-                return ResponseEntity.
-                        status(UNAUTHORIZED).
-                        body(new APIResponse(UNAUTHORIZED.value(), getWrongEmailMessage(authenticationRequest)));
-
-            return verifyAndCreateAuthToken(authenticationRequest, response);
-        }catch (AuthenticationException e){
-            return ResponseEntity.status(UNAUTHORIZED).body(new APIResponse(UNAUTHORIZED.value(), "Wrong Password"));
-        }
+    @PostMapping("/authenticate")
+    public ResponseEntity<APIResponse> verifyAndCreateAuthToken(@RequestBody AuthenticationRequest authenticationRequest)
+    {
+        return authenticationApiService.verifyAndCreateAuthToken(authenticationRequest);
     }
 
-    private ResponseEntity<APIResponse> verifyAndCreateAuthToken(AuthenticationRequest authRequest, HttpServletResponse response) {
-        authService.verifyAuthenticationRequest(authRequest);
-
-        AuthenticationResponse authToken = authService.createAuthToken(authRequest);
-
-        return ResponseEntity.ok(new APIResponse(authToken, OK.value(),"Welcome!"));
+    @GetMapping("/refreshToken")
+    public ResponseEntity<APIResponse> createAccessTokenFromRefreshToken(HttpServletRequest servletRequest)
+    {
+        return authenticationApiService.createAccessTokenFromRefreshToken(servletRequest);
     }
 
-    private String getWrongEmailMessage(AuthenticationRequest authenticationRequest) {
-        return String.format("The Email %s does not exist", authenticationRequest.getEmail());
+    @PostMapping("/signout")
+    public ResponseEntity<Void> signout(@RequestBody SignOutRequestDto signOutRequestDto)
+    {
+        return authenticationApiService.signout(signOutRequestDto);
     }
 
-    private boolean emailIsntFound(AuthenticationRequest authenticationRequest) {
-        return userRepo.findByEmail(authenticationRequest.getEmail()).isEmpty();
-    }
 }

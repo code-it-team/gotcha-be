@@ -1,14 +1,15 @@
 package codeit.gatcha.domain.user.entity;
 
-import codeit.gatcha.api.security.entity.GatchaAuthority;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
-@Data @NoArgsConstructor @Builder @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "GATCHA_USER")
 public class GatchaUser {
@@ -17,7 +18,7 @@ public class GatchaUser {
     private Integer id;
 
     @ManyToOne
-    private GatchaAuthority authority;
+    private Authority authority;
 
     @Email
     @Column(unique = true)
@@ -27,7 +28,7 @@ public class GatchaUser {
 
     private boolean enabled = true;
 
-    public GatchaUser(String email, String password, boolean enabled, GatchaAuthority authority) {
+    public GatchaUser(String email, String password, boolean enabled, Authority authority) {
         this.authority = authority;
         this.email = email;
         this.password = password;
