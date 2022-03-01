@@ -1,8 +1,9 @@
-package codeit.gatcha.api.security.refreshtoken;
+package codeit.gatcha.api.security.service;
 
+import codeit.gatcha.api.security.entity.RefreshToken;
+import codeit.gatcha.api.security.repo.RefreshTokenRepository;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

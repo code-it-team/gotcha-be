@@ -1,4 +1,4 @@
-package codeit.gatcha.api.security.refreshtoken;
+package codeit.gatcha.api.security.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

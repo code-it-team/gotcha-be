@@ -4,7 +4,6 @@ import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.dto.AuthenticationRequest;
 import codeit.gatcha.api.security.dto.AuthenticationResponse;
 import codeit.gatcha.api.security.dto.SignOutRequestDto;
-import codeit.gatcha.api.security.refreshtoken.RefreshTokenService;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import codeit.gatcha.domain.user.repo.IUserRepo;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +84,9 @@ public class AuthenticationApiService
 
         refreshTokenService.saveNewRefreshToken(refreshToken, user);
 
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse(refreshToken, createAccessToken(userDetails), user.getEmail());
+        String accessToken = createAccessToken(userDetails);
+
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse(refreshToken, accessToken, user.getEmail());
 
         return new APIResponse(authenticationResponse, OK.value(), "success");
     }

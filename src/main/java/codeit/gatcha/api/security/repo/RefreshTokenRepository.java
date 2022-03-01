@@ -1,5 +1,6 @@
-package codeit.gatcha.api.security.refreshtoken;
+package codeit.gatcha.api.security.repo;
 
+import codeit.gatcha.api.security.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
