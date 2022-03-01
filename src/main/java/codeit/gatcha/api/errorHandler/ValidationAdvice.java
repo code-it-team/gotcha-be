@@ -1,5 +1,6 @@
 package codeit.gatcha.api.errorHandler;
 
+import codeit.gatcha.api.response.APIResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,14 @@ public class ValidationAdvice{
     @ResponseStatus(BAD_REQUEST)
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public APIResponse methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
 
         List<FieldError> fieldErrors = result.getFieldErrors();
 
         String errorMessage = fieldErrors.get(0).getDefaultMessage();
 
-        return ResponseEntity.badRequest().body(errorMessage);
+        return new APIResponse(BAD_REQUEST.value(), errorMessage);
     }
 
 }

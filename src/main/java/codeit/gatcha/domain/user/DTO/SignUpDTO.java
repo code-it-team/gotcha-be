@@ -1,12 +1,13 @@
 package codeit.gatcha.domain.user.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 
-@Data @AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
 public class SignUpDTO {
     @NotBlank(message = "Email can't be blank")
     private String email;

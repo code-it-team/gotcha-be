@@ -1,14 +1,14 @@
 package codeit.gatcha.api.response;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-@RequiredArgsConstructor @Getter @ToString
+@AllArgsConstructor
+@Getter @ToString
+@NoArgsConstructor
 public class APIResponse {
-    private final Object body;
-    private final int statusCode;
-    private final String message;
+    private Object body;
+    private int statusCode;
+    private String message;
 
     public APIResponse(int statusCode, String message) {
         this.statusCode = statusCode;
