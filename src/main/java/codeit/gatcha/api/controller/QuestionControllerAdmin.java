@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController @RequiredArgsConstructor
-public class QuestionController_Admin {
+public class QuestionControllerAdmin {
     private final QuestionCreationService questionCreationService;
     private final API_QuestionFetchService api_questionFetchService;
     private final API_QuestionDeletionService api_questionDeletionService;
@@ -34,8 +34,8 @@ public class QuestionController_Admin {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @DeleteMapping("/admin/question/delete")
-    public ResponseEntity<APIResponse> invalidateQuestionByIdOrThrow(@RequestBody int id) {
+    @DeleteMapping("/admin/question/delete/{id}")
+    public ResponseEntity<APIResponse> invalidateQuestionByIdOrThrow(@PathVariable int id) {
         return api_questionDeletionService.invalidateQuestionById(id);
     }
 

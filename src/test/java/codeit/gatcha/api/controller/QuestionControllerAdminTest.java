@@ -1,10 +1,9 @@
-package codeit.gatcha.api.adminControllerTest;
+package codeit.gatcha.api.controller;
 
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.DTO.question.inputDTO.NewQuestion_DTO;
 import codeit.gatcha.api.DTO.question.outputDTO.Admin_QuestionDTO;
 import codeit.gatcha.api.DTO.question.outputDTO.Admin_QuestionsDTO;
-import codeit.gatcha.api.controller.QuestionController_Admin;
 import codeit.gatcha.api.service.question.API_QuestionDeletionService;
 import codeit.gatcha.api.service.question.API_QuestionFetchService;
 import codeit.gatcha.api.service.question.API_QuestionUpdateService;
@@ -12,6 +11,8 @@ import codeit.gatcha.domain.question.entity.Question;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,19 +23,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import java.util.Arrays;
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = QuestionController_Admin.class)
-@ContextConfiguration(classes = QuestionController_Admin.class)
+@WebMvcTest(controllers = QuestionControllerAdmin.class)
+@ContextConfiguration(classes = QuestionControllerAdmin.class)
 @WithMockUser
-public class QuestionControllerTest {
+public class QuestionControllerAdminTest {
 
     @MockBean
     QuestionCreationService questionCreationService;
@@ -50,6 +52,9 @@ public class QuestionControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Captor
+    ArgumentCaptor<Admin_QuestionDTO> questionDtoCaptor;
 
     @Test
     void givenQuestionIsCreatedSuccessfully_CheckResponseMessage() throws Exception {
@@ -105,4 +110,33 @@ public class QuestionControllerTest {
         assertEquals("q2", questions.get(1).getBody());
         assertEquals(2, questions.get(1).getId());
     }
+
+    @Test
+    public void givenAQuestionId_ThenDeleteIt() throws Exception {
+
+        mockMvc.perform(delete("/admin/question/delete/22")
+                        .with(csrf()))
+                .andExpect(status().isOk());
+
+        verify(api_questionDeletionService).invalidateQuestionById(22);
+    }
+
+    @Test
+    public void givenAQuestionIdToUpdate_DetectQuestionNotFound() throws Exception {
+        Admin_QuestionDTO questionDTO = new Admin_QuestionDTO("newBody", 1);
+
+        mockMvc.perform(put("/admin/question/update")
+                        .with(csrf())
+                        .content(objectMapper.writeValueAsString(questionDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(api_questionUpdateService).updateQuestionById(questionDtoCaptor.capture());
+
+        Admin_QuestionDTO captured = questionDtoCaptor.getValue();
+        assertThat(captured.getBody()).isEqualTo("newBody");
+        assertThat(captured.getId()).isEqualTo(1);
+    }
+
+
 }
