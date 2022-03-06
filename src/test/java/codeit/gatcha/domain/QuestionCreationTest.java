@@ -1,7 +1,7 @@
 package codeit.gatcha.domain;
 
 import codeit.gatcha.domain.question.entity.Question;
-import codeit.gatcha.domain.question.repo.QuestionRepo;
+import codeit.gatcha.domain.question.repo.IQuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.doAnswer;
 @ExtendWith(MockitoExtension.class)
 public class QuestionCreationTest {
     @Mock
-    QuestionRepo questionRepo;
+    IQuestionRepo questionRepo;
 
     @Test
     void givenAnswers_CreateQuestion(){

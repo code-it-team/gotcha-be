@@ -13,12 +13,15 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
+    @Column(nullable = false)
     private String body;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     Question question;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     GatchaUser user;
 
     public Answer (QuestionAnswer_DTO questionAnswer_dto, Question question, GatchaUser user){

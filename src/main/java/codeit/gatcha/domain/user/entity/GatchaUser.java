@@ -21,11 +21,13 @@ public class GatchaUser {
     private Authority authority;
 
     @Email
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private boolean enabled = true;
 
     public GatchaUser(String email, String password, boolean enabled, Authority authority) {

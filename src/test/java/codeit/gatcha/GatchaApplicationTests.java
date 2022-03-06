@@ -1,7 +1,7 @@
 package codeit.gatcha;
 
 import codeit.gatcha.domain.question.entity.Question;
-import codeit.gatcha.domain.question.repo.QuestionRepo;
+import codeit.gatcha.domain.question.repo.IQuestionRepo;
 import codeit.gatcha.domain.question.service.QuestionCreationService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestPropertySource(
 		locations = "classpath:application-dev.properties")
 class GatchaApplicationTests {
-	private final QuestionRepo questionRepo;
+	private final IQuestionRepo questionRepo;
 	private final QuestionCreationService questionCreationService;
 
 	@Autowired
-	public GatchaApplicationTests(QuestionRepo questionRepo, QuestionCreationService questionCreationService) {
+	public GatchaApplicationTests(IQuestionRepo questionRepo, QuestionCreationService questionCreationService) {
 		this.questionRepo = questionRepo;
 		this.questionCreationService = questionCreationService;
 	}

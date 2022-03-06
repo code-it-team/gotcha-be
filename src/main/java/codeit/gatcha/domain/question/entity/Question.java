@@ -13,6 +13,7 @@ public class Question {
     @Column(nullable = false)
     private String body;
 
+    @Column(nullable = false)
     private boolean valid = true;
 
     public Question(Integer id, String body) {

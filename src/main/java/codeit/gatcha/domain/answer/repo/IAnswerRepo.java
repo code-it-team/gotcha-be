@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface AnswerRepo extends CrudRepository<Answer, Integer> {
+public interface IAnswerRepo extends CrudRepository<Answer, Integer> {
     Optional<Answer> findByQuestionAndUser(Question question, GatchaUser gatchaUser);
     List<Answer> findByUser(GatchaUser user);
 }

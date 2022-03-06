@@ -5,7 +5,7 @@ import codeit.gatcha.api.DTO.Publication.PublishedQuestionDTO;
 import codeit.gatcha.api.DTO.Publication.PublishedQuestionsDTO;
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.common.user.service.UserSessionService;
-import codeit.gatcha.domain.answer.repo.AnswerRepo;
+import codeit.gatcha.domain.answer.repo.IAnswerRepo;
 import codeit.gatcha.domain.answer.service.AnswerFetchService;
 import codeit.gatcha.domain.publication.entity.Publication;
 import codeit.gatcha.domain.publication.repo.PublicationRepo;
@@ -27,7 +27,7 @@ public class API_PublicationService {
     private final AnswerFetchService answerFetchService;
     private final PublicationRepo publicationRepo;
     private final UserSessionService userSessionService;
-    private final AnswerRepo answerRepo;
+    private final IAnswerRepo answerRepo;
 
     public ResponseEntity<APIResponse> publishAnswers() {
         GatchaUser user = userSessionService.getCurrentLoggedInUser();

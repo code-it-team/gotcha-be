@@ -1,6 +1,5 @@
 package codeit.gatcha.api.controller;
 
-import codeit.gatcha.api.controller.PublicationController;
 import codeit.gatcha.api.service.publication.API_PublicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

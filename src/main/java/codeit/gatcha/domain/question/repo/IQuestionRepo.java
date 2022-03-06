@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface QuestionRepo extends CrudRepository<Question, Integer> {
+public interface IQuestionRepo extends CrudRepository<Question, Integer> {
     List<Question> findQuestionsByValidTrue();
     Optional<Question> findQuestionsByBody(String body);
 }

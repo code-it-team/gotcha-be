@@ -1,4 +1,4 @@
-package codeit.gatcha.domain;
+package codeit.gatcha.api.service;
 
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.entity.ConfirmationToken;
@@ -30,12 +30,11 @@ public class AccountActivationTest {
     @Mock
     ConfirmationTokenService confirmationTokenService;
 
-    SignUpService signUpService;
     API_SignUpService api_signUpService;
 
     @BeforeEach
     void setUp(){
-        signUpService = new SignUpService(IUserRepo, null, confirmationTokenRepo);
+        SignUpService signUpService = new SignUpService(IUserRepo, null, confirmationTokenRepo);
         api_signUpService = new API_SignUpService(signUpService, null, null, confirmationTokenService);
     }
 

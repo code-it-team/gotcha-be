@@ -6,10 +6,10 @@ import codeit.gatcha.api.DTO.question.outputDTO.User_QuestionDTO;
 import codeit.gatcha.api.DTO.question.outputDTO.User_QuestionsDTO;
 import codeit.gatcha.common.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.entity.Answer;
-import codeit.gatcha.domain.answer.repo.AnswerRepo;
+import codeit.gatcha.domain.answer.repo.IAnswerRepo;
 import codeit.gatcha.domain.publication.repo.PublicationRepo;
 import codeit.gatcha.domain.question.entity.Question;
-import codeit.gatcha.domain.question.repo.QuestionRepo;
+import codeit.gatcha.domain.question.repo.IQuestionRepo;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 @Service @RequiredArgsConstructor
 public class API_QuestionFetchService {
-    private final QuestionRepo questionRepo;
-    private final AnswerRepo answerRepo;
+    private final IQuestionRepo questionRepo;
+    private final IAnswerRepo answerRepo;
     private final UserSessionService userSessionService;
     private final PublicationRepo publicationRepo;
 

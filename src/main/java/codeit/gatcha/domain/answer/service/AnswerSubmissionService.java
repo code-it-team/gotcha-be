@@ -3,9 +3,9 @@ package codeit.gatcha.domain.answer.service;
 import codeit.gatcha.api.DTO.question.inputDTO.QuestionAnswer_DTO;
 import codeit.gatcha.common.user.service.UserSessionService;
 import codeit.gatcha.domain.answer.entity.Answer;
-import codeit.gatcha.domain.answer.repo.AnswerRepo;
+import codeit.gatcha.domain.answer.repo.IAnswerRepo;
 import codeit.gatcha.domain.question.entity.Question;
-import codeit.gatcha.domain.question.repo.QuestionRepo;
+import codeit.gatcha.domain.question.repo.IQuestionRepo;
 import codeit.gatcha.domain.user.entity.GatchaUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ import javax.persistence.EntityNotFoundException;
 
 @Service @RequiredArgsConstructor
 public class AnswerSubmissionService {
-    private final QuestionRepo questionRepo;
+    private final IQuestionRepo questionRepo;
     private final UserSessionService userSessionService;
-    private final AnswerRepo answerRepo;
+    private final IAnswerRepo answerRepo;
 
     public void checkAndSubmitAnswer(QuestionAnswer_DTO answerDTO) {
         Question question = getQuestionOrThrow(answerDTO);
