@@ -1,4 +1,4 @@
-package codeit.gatcha.userTest;
+package codeit.gatcha.domain;
 
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.entity.ConfirmationToken;
