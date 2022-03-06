@@ -1,4 +1,4 @@
-package codeit.gatcha.domain;
+package codeit.gatcha.api.service;
 
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.service.API_SignUpService;
@@ -18,9 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -28,21 +26,24 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @ExtendWith(MockitoExtension.class)
-public class SignupTest {
+public class API_SignUpServiceTest {
     @Mock
     private IUserRepo IUserRepo;
+
     @Mock
     private IAuthorityRepo authorityRepo;
+
     @Mock
     EmailConfirmationService emailConfirmationService;
+
     @Mock
     private UserService userService;
 
     API_SignUpService api_signUpService;
-    SignUpService signUpService;
+
     @BeforeEach
     void setUp(){
-        signUpService = new SignUpService(IUserRepo, authorityRepo, null);
+        SignUpService signUpService = new SignUpService(IUserRepo, authorityRepo, null);
         api_signUpService = new API_SignUpService(signUpService, emailConfirmationService, userService, null);
     }
 

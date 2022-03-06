@@ -1,4 +1,4 @@
-package codeit.gatcha.api.errorHandler;
+package codeit.gatcha.api.errorhandler;
 
 
 import codeit.gatcha.api.response.APIResponse;

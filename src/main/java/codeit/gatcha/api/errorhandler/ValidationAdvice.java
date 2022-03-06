@@ -1,9 +1,8 @@
-package codeit.gatcha.api.errorHandler;
+package codeit.gatcha.api.errorhandler;
 
 import codeit.gatcha.api.response.APIResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

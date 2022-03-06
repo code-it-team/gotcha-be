@@ -1,7 +1,6 @@
 package codeit.gatcha.api.controller;
 
-import codeit.gatcha.api.controller.SignupController;
-import codeit.gatcha.api.errorHandler.ValidationAdvice;
+import codeit.gatcha.api.errorhandler.ValidationAdvice;
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.security.service.API_SignUpService;
 import codeit.gatcha.domain.user.DTO.SignUpDTO;

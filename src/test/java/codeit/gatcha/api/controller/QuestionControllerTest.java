@@ -1,7 +1,7 @@
 package codeit.gatcha.api.controller;
 
 import codeit.gatcha.api.DTO.question.outputDTO.User_QuestionsDTO;
-import codeit.gatcha.api.errorHandler.ValidationAdvice;
+import codeit.gatcha.api.errorhandler.ValidationAdvice;
 import codeit.gatcha.api.response.APIResponse;
 import codeit.gatcha.api.DTO.question.inputDTO.QuestionAnswer_DTO;
 import codeit.gatcha.api.DTO.question.inputDTO.QuestionAnswers_DTO;
