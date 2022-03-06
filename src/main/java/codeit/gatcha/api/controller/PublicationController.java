@@ -15,17 +15,20 @@ public class PublicationController {
     private final API_PublicationService publicationService;
 
     @PostMapping("answers/publish")
-    public ResponseEntity<APIResponse> publishAnswers() {
+    public ResponseEntity<APIResponse> publishAnswers()
+    {
         return publicationService.publishAnswers();
     }
 
-    @GetMapping("answers/getLink")
-    public ResponseEntity<APIResponse> getPublicationLinkOfUser() {
+    @GetMapping("answers/link")
+    public ResponseEntity<APIResponse> getPublicationLinkOfUser()
+    {
         return publicationService.getPublicationLink();
     }
 
     @GetMapping("answers/published/{link}")
-    public ResponseEntity<APIResponse> getPublishedAnswersByLink(@PathVariable String link) {
+    public ResponseEntity<APIResponse> getPublishedAnswersByLink(@PathVariable String link)
+    {
         return publicationService.getPublishedAnswersByLink(link);
     }
 }

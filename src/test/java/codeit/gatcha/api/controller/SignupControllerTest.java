@@ -1,4 +1,4 @@
-package codeit.gatcha.api.clientControllerTest;
+package codeit.gatcha.api.controller;
 
 import codeit.gatcha.api.controller.SignupController;
 import codeit.gatcha.api.errorHandler.ValidationAdvice;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = SignupController.class)
 @ContextConfiguration(classes = {SignupController.class, ValidationAdvice.class})
 @WithMockUser
-public class SignupTest {
+public class SignupControllerTest {
     @MockBean
     API_SignUpService api_signUpService;
 
