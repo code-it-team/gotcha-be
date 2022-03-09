@@ -1,4 +1,4 @@
-package codeit.gatcha.domain.user.seeder;
+package codeit.gatcha.domain.seeder;
 
 import codeit.gatcha.domain.user.entity.Authority;
 import codeit.gatcha.domain.user.entity.GatchaUser;
@@ -7,16 +7,18 @@ import codeit.gatcha.domain.user.repo.IUserRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import java.util.HashSet;
 
-@Component @Log4j2
-public class AdminSeeder implements CommandLineRunner {
+@Component
+@Log4j2
+@Profile("dev")
+public class UserSeeder implements CommandLineRunner {
     IUserRepo IUserRepo;
     IAuthorityRepo authorityRepo;
 
     @Autowired
-    AdminSeeder(IUserRepo IUserRepo, IAuthorityRepo authorityRepo){
+    UserSeeder(IUserRepo IUserRepo, IAuthorityRepo authorityRepo){
         this.IUserRepo = IUserRepo;
         this.authorityRepo = authorityRepo;
     }
